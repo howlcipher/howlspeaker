@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+*.wav
+*.mp3
+models/
+voices/
+.wheel_check/

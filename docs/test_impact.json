@@ -1,0 +1,16 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Installable M0 CLI with bounded strict JSON configuration and private structured diagnostics",
+  "tests_added": [
+    "tests/test_foundation.py: 32 unit and CLI integration cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests"
+  ],
+  "rationale": "No existing tests. Unit and CLI integration cover M0 behavior and authority rejection including oversized/invalid encoding, duplicate keys and private logs. Installation checked separately. Real synthesis, audio consent validation and process cleanup remain M1 gaps; no fake is claimed as inference evidence."
+}
