@@ -8,6 +8,7 @@ from pathlib import Path
 
 from howlspeaker.config import load_configuration
 from howlspeaker.diagnostics import configure_logging
+from howlspeaker.voice import validate_voice
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -16,13 +17,32 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     config = commands.add_parser("config", help="Validate and show budgets")
     config.add_argument("--config", type=Path)
+    voice = commands.add_parser(
+        "validate-voice", help="Check an authorized local PCM WAV reference",
+    )
+    voice.add_argument("--voice", type=Path, required=True)
+    voice.add_argument("--authorized", action="store_true",
+                       help="Confirm permission to clone this voice")
+    voice.add_argument("--provenance", required=True,
+                       help="Describe the source and permission basis")
+    voice.add_argument("--transcript")
+    voice.add_argument("--require-transcript", action="store_true")
+    voice.add_argument("--config", type=Path)
     args = parser.parse_args(argv)
     logger = logging.getLogger("howlspeaker")
     configure_logging(logger, sys.stderr)
     try:
         settings = load_configuration(args.config)
+        if args.command == "validate-voice":
+            profile = validate_voice(
+                args.voice, authorized=args.authorized,
+                provenance=args.provenance, transcript=args.transcript,
+                require_transcript=args.require_transcript, config=settings,
+            )
+            print(json.dumps(profile.audio_metadata(), indent=2))
+            return 0
     except ValueError as error:
-        logger.error("", extra={"event": "config_rejected"})
+        logger.error("", extra={"event": "input_rejected"})
         print(str(error), file=sys.stderr)
         return 2
     logger.info("", extra={"event": "config_validated"})

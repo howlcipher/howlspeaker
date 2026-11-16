@@ -12,10 +12,16 @@ JSON diagnostics and pytest. No runtime dependencies in M0.
 | JSON files | Inspectable portable configuration | No concurrent transactions | Use for small configuration |
 | Database | Atomic queries and concurrent updates | Schema/migration overhead | Not needed in M0 |
 
-Current modules: config validates immutable safety budgets; diagnostics emits
+Foundation modules: config validates immutable safety budgets; diagnostics emits
 allowlisted JSON events; cli validates and prints configuration. No model imports.
 
-M1 design, not implemented: VoiceProfile validates local reference, attestation,
+M1 voice validation implemented: VoiceProfile holds a validated immutable audio
+snapshot, authorization attestation, provenance and optional transcript.
+`validate_voice` checks authority before reading and bounds reads through a
+nonblocking, no-follow regular-file descriptor. Container and PCM metadata checks
+precede decoding with standard-library wave. No persistent profile store exists.
+
+Remaining M1 design, not implemented: a synthesis workflow validates local reference, attestation,
 provenance and optional transcript. A minimal SynthesisProvider accepts text,
 reference and supported settings and returns audio plus measurements.
 NarrationService coordinates without engine imports. The provider runs in a

@@ -9,7 +9,9 @@ from typing import TextIO
 class EventFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         event = getattr(record, "event", "diagnostic")
-        if event not in {"config_validated", "config_rejected"}:
+        if event not in {
+            "config_validated", "config_rejected", "input_rejected",
+        }:
             event = "diagnostic"
         return json.dumps({
             "timestamp": datetime.now(timezone.utc).isoformat(),

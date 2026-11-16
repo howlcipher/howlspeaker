@@ -1,30 +1,34 @@
 # Status
 
-Verified 2026-11-15 UTC.
+Verified 2026-11-16 UTC.
 
-Current milestone: M0. State: COMPLETE.
-Current bounded task: foundation installation, feasibility and regression evidence.
-Last verified capability: installed CLI validates safe configuration and emits
-private structured diagnostics; editable and wheel installations both work.
-Latest tests: full lightweight suite 32 passed, 0 failed, 0 skipped;
-flake8 src tests passed. No pre-existing regression baseline.
-Last completed commit: none before initial foundation commit; see git log for
-current signed revision. No remote created, no push or CI triggered.
-Outstanding blockers: M1 real inference requires approved model/dependency
-inventory/download, runtime compatibility review and authorized reference.
-CPU speed and peak memory fit remain unknown. FFmpeg absent on PATH.
-Known regressions: none observed within M0; synthesis is not implemented.
-Next recommended action: bounded M1 local PCM WAV validation and explicit
-consent/provenance contract, with failure/edge/authority tests; no heavy dependencies.
-Acceptance: reject unauthorized, malformed, oversized, truncated or overlong
-references before provider invocation; accept a valid authorized local fixture.
-Approval for that code-only next task: no. Approval for model downloads,
-real inference, system dependencies, uploads or budget changes: yes.
-M1 state: BLOCKED for real synthesis, NOT demonstrated. M2 through M6 not started.
+Current milestone: M1. State: BLOCKED for real synthesis.
+M0 remains COMPLETE. Current bounded task: consent and local WAV validation,
+implemented and verified. No inference provider implemented.
+Last verified capability: API and installed CLI validate authorized bounded PCM
+references, reject malformed/unsafe input and expose only audio metadata.
+Latest tests: full lightweight suite 71 passed, 0 failed, 0 skipped;
+flake8 src tests passed. Existing 32 foundation tests remain passing.
+Last completed commit before this task: 80956fc (signed M0 foundation).
+Use git log for current task revision. No push or CI triggered.
+Known regressions: none observed in the lightweight suite.
 
-No models downloaded, no real inference tested, no scripts or voice files
-uploaded, no unrelated processes stopped. Resource measurements are harmless
-probe results only, recorded in BENCHMARKS.md. Full test impact assessment is in
-documentation/TESTING.md and docs/test_impact.json with local evidence ledger.
-The initial packaging hardlink warning was resolved by explicit copy mode on the
-successful final editable and wheel installation checks.
+Next recommended task: minimal provider contract and narration coordination,
+with test-only fake and consent rejection before provider invocation. Accept when
+valid snapshots/text reach the provider, unsupported/overlong input fails before
+invocation, and fake results cannot be represented as real synthesis evidence.
+This code-only task needs no approval. Do not widen scope to M2.
+
+Real synthesis blockers: approved model/dependency download inventory, compatible
+isolated runtime and authorized real reference are still needed. CPU duration and
+5 GiB peak fit remain unknown; GPU inference compatibility unverified. FFmpeg is
+absent on PATH. Downloads, real inference, system dependencies, remote uploads,
+paid services and resource-budget changes require explicit approval.
+M1 completion still requires playable intelligible reference-conditioned WAV,
+resource/cleanup evidence and human listening. It is not demonstrated.
+
+No model downloads or real inference. Resource measurements remain harmless M0
+probe results only (BENCHMARKS.md). Validation fixtures are synthesized silent PCM;
+no speech quality claims are made. Provenance/transcripts live only in the API
+snapshot; CLI validation persists nothing. Full impact assessment is recorded in
+documentation/TESTING.md, docs/test_impact_m1.json and docs/evidence.jsonl.

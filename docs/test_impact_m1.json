@@ -1,0 +1,16 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Explicitly authorized bounded PCM voice snapshot API and metadata validation CLI",
+  "tests_added": [
+    "tests/test_voice.py: 39 behavior and CLI integration cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests"
+  ],
+  "rationale": "Retained all 32 foundation tests. Added authority-before-IO, valid snapshot, privacy, transcript, format/header, truncation, exact bounds and nonregular-file cases. Full 71-case lightweight regression passed. No real inference; engine, persistence, cleanup, export and listening acceptance remain M1 gaps. Synthetic PCM installed CLI acceptance passed."
+}
