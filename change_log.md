@@ -40,3 +40,13 @@ milestone labels and working command/API documentation. No inference or uploads.
 Verified public GitHub backup, MIT license, green CI and successful Pages deployment.
 Recorded deployed revision, public HTTP/browser checks and PR review state in
 PUBLICATION.md. Export/page changes remain on PR #1; no merge claimed.
+
+## M1 authorized audio and video samples
+
+Added `sample-script`, public reference_reading.txt and recording guidance.
+Added `prepare-sample` and MediaImporter for authorized local audio/video excerpts,
+transcript files, track selection and 24 kHz mono PCM preparation. Existing host
+FFmpeg runs under verified cgroup/file-size/network limits with measured duration,
+peak memory and timeout/descendant cleanup. Added separate authorized-reference
+export labelling, private artifact ignores, contract tests and opt-in real media
+smoke. No speech generation, automatic transcript, recorder or model download.

@@ -59,3 +59,15 @@ keyboard-accessible theme/ecosystem controls and accurate milestone disclosures.
 GitHub Actions deploys only site/ with minimal Pages/OIDC permissions. This
 static documentation is not the M5 application interface. No HTTP API added:
 CLI and Python endpoints satisfy current scope without server maintenance.
+
+M1 media intake: MediaImporter prepares a bounded authorized clip from a seekable
+private source snapshot; SystemdMediaRunner serializes local host conversions,
+verifies actual cgroup/file-size/network limits, and invokes established FFmpeg
+code for extraction/resampling. No codec/DSP algorithm is reimplemented. Pipe-only
+input was rejected as the default because ordinary MP4 files may require seeking;
+a private regular descriptor avoids container/host path coupling. A direct
+unbounded subprocess would be simpler but cannot provide the required memory and
+descendant controls, so there is no such fallback. Host tools are not bundled.
+ExportService reuses its existing publisher with a distinct authorized-reference
+label; simulation results retain their simulation label. Provenance/transcript
+remain private in-memory profile fields. No persistent profile store or recorder.

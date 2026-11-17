@@ -28,3 +28,12 @@ cgroup view describes the launched host service. Child runtime paths and engine
 visibility must be checked before inference. See RESOURCE_SAFETY.md.
 CPU inference may be technically possible but practical latency and total memory
 fit are unknown. No model can yet be certified to fit the 5 GiB budget.
+
+2026-11-17 update: FFmpeg/ffprobe 9.0.2 are present on the host, although neither
+is on the container PATH. Bounded user systemd services can run the host binaries
+and host Python 3.15.2. No installation was needed. Parent app remains Python 3.14.4.
+Current readback: about 12 GiB available RAM, zero memory PSI averages, load
+1.47/1.18/1.13, 192 GiB workspace free before media smoke. Imports used no GPU.
+Current systemd docs list RestrictAddressFamilies=none, but this host rejects that
+transient-unit value. AF_UNIX is accepted and live probes confirm IPv4/IPv6 socket
+creation is denied. Media guard verifies the deny behavior before every decode.

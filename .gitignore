@@ -9,3 +9,16 @@ dist/
 models/
 voices/
 .wheel_check/
+*.mp4
+*.mov
+*.m4v
+*.m4a
+*.mkv
+*.webm
+*.flac
+*.ogg
+*.aac
+*.avi
+samples/
+recordings/
+output/

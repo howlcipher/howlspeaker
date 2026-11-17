@@ -38,12 +38,10 @@ class VoiceProfile:
         }
 
 
-def validate_voice(
-    path: Path, *, authorized: bool, provenance: str,
-    transcript: str | None = None, require_transcript: bool = False,
-    config: Configuration | None = None,
-) -> VoiceProfile:
-    """Validate consent before accessing a bounded local file; never infer."""
+def validate_attestation(
+    authorized: bool, provenance: str, transcript: str | None,
+    require_transcript: bool = False,
+) -> tuple[str, str | None]:
     if authorized is not True:
         raise ValueError("Explicit voice authorization is required")
     if (not isinstance(provenance, str) or not provenance.strip()
@@ -55,6 +53,18 @@ def validate_voice(
         transcript = transcript.strip() or None
     if require_transcript and transcript is None:
         raise ValueError("Reference transcript is required")
+    return provenance.strip(), transcript
+
+
+def validate_voice(
+    path: Path, *, authorized: bool, provenance: str,
+    transcript: str | None = None, require_transcript: bool = False,
+    config: Configuration | None = None,
+) -> VoiceProfile:
+    """Validate consent before accessing a bounded local file; never infer."""
+    provenance, transcript = validate_attestation(
+        authorized, provenance, transcript, require_transcript,
+    )
     settings = config if config is not None else Configuration()
     data = read_local_audio(path, settings.max_voice_bytes)
     metadata = validate_pcm_wav(

@@ -11,7 +11,9 @@ from howlspeaker.config import load_configuration
 from howlspeaker.export import ExportService
 from howlspeaker.provider import SimulationResult
 from howlspeaker.diagnostics import configure_logging
-from howlspeaker.voice import validate_voice
+from howlspeaker.voice import validate_voice, validate_attestation
+from howlspeaker.media import MediaImporter, REFERENCE_SCRIPT
+from howlspeaker.process import SystemdMediaRunner
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -40,11 +42,58 @@ def main(argv: list[str] | None = None) -> int:
     export.add_argument("--output-dir", type=Path, required=True)
     export.add_argument("--name", required=True)
     export.add_argument("--config", type=Path)
+    commands.add_parser("sample-script", help="Print a read-aloud script")
+    prepare = commands.add_parser(
+        "prepare-sample", help="Prepare an authorized audio/video clip",
+    )
+    prepare.add_argument("--input", type=Path, required=True)
+    prepare.add_argument("--output-dir", type=Path, required=True)
+    prepare.add_argument("--name", required=True)
+    prepare.add_argument("--authorized", action="store_true")
+    prepare.add_argument("--provenance", required=True)
+    text = prepare.add_mutually_exclusive_group()
+    text.add_argument("--transcript")
+    text.add_argument("--transcript-file", type=Path)
+    prepare.add_argument("--start", type=float, default=0)
+    prepare.add_argument("--seconds", type=float, default=30)
+    prepare.add_argument("--audio-stream", type=int, default=0)
+    prepare.add_argument("--ffmpeg", default="ffmpeg")
+    prepare.add_argument("--config", type=Path)
     args = parser.parse_args(argv)
+    if args.command == "sample-script":
+        print(REFERENCE_SCRIPT)
+        return 0
     logger = logging.getLogger("howlspeaker")
     configure_logging(logger, sys.stderr)
     try:
         settings = load_configuration(args.config)
+        if args.command == "prepare-sample":
+            validate_attestation(args.authorized, args.provenance,
+                                 args.transcript)
+            transcript = args.transcript
+            if args.transcript_file is not None:
+                try:
+                    transcript = read_local_audio(
+                        args.transcript_file, 20000,
+                    ).decode("utf-8")
+                except (ValueError, UnicodeError):
+                    raise ValueError("Cannot load reference transcript") \
+                        from None
+            importer = MediaImporter(
+                SystemdMediaRunner(settings, ffmpeg=args.ffmpeg), settings,
+            )
+            prepared = importer.prepare(
+                path=args.input, authorized=args.authorized,
+                provenance=args.provenance, transcript=transcript,
+                start=args.start, seconds=args.seconds,
+                audio_stream=args.audio_stream,
+            )
+            metadata = ExportService(settings).export_reference(
+                prepared.profile, args.output_dir, args.name,
+            )
+            report = metadata | {"measurements": prepared.measurements}
+            print(json.dumps(report, indent=2))
+            return 0
         if args.command == "export-simulation":
             data = read_local_audio(args.input, settings.max_output_bytes)
             metadata = ExportService(settings).export_simulation(

@@ -23,6 +23,9 @@ All commands support `--config FILE`; voice validation additionally supports
 `--transcript TEXT` and `--require-transcript`. Exit 0 means that command succeeded;
 exit 2 means validation/usage failure. JSON goes to stdout on success; safe errors
 go to stderr. No `speak` or HTTP endpoint exists yet. Nothing launches a model.
+`sample-script` prints public read-aloud text. `prepare-sample` extracts an
+authorized local audio/video clip using the guarded host media service; see
+[recording guide](RECORDING.md) for options and Python API examples.
 CLI arguments may appear in shell history/process listings; use the Python API
 for sensitive provenance or transcript. No raw voice/script logging occurs.
 

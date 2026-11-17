@@ -1,8 +1,8 @@
 # HowlSpeaker
 
 Local-first narration from authorized voice samples and scripts.
-M0 foundation, M1 voice validation, simulation coordination and WAV export
-are available.
+M0 foundation, M1 audio/video sample preparation, voice validation,
+simulation coordination and WAV export are available.
 Speech generation is not implemented. No weights are bundled or downloaded.
 
 ## Install and verify
@@ -12,7 +12,7 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -e '.[dev]'
 .venv/bin/howlspeaker config
 .venv/bin/python -m pytest tests
-.venv/bin/python -m flake8 src tests
+.venv/bin/python -m flake8 src tests scripts
 ```
 
 Python 3.12 or newer; M0 verified on 3.14.4 only. Inference needs a separate
@@ -101,3 +101,37 @@ Project page: https://howlcipher.github.io/howlspeaker/
 Repository: https://github.com/howlcipher/howlspeaker
 The current export/page work is on `feature/wav-export-and-project-page` pending
 pull-request review; clone that branch to try these additions before integration.
+
+## Prepare your voice sample
+
+Record the supplied script in your normal voice, or choose an existing authorized
+recording, audio file or video with sound. Preparation extracts a selected clip;
+it does not generate speech, isolate speakers or verify the transcript.
+
+```bash
+mkdir -p samples
+howlspeaker sample-script > samples/reference_transcript.txt
+# Record yourself reading that exact text, then select your local recording.
+howlspeaker prepare-sample --input my-recording.mp4 --authorized \
+  --provenance "My recording; I authorize use of my voice" \
+  --transcript-file samples/reference_transcript.txt \
+  --start 0 --seconds 25 --output-dir samples --name reference.wav
+```
+
+For existing footage, supply the words actually spoken in the selected clip;
+never substitute the supplied script unless that is what you recorded. Use
+`--audio-stream 1` for a second audio track. Default is the first track.
+Output is private 24 kHz mono 16-bit PCM WAV, with an authorized-reference label,
+not the simulation label. Source files remain unchanged. No automatic transcript.
+See [recording and media guide](docs/RECORDING.md) and the public read-aloud text
+in [examples/reference_reading.txt](examples/reference_reading.txt).
+
+Requirements: Linux cgroup v2, a working user systemd manager, host Python 3 and
+FFmpeg. Existing host tools can be used from Distrobox without installation.
+The decoder must pass resource/network checks before touching media; no unrestricted
+fallback. Imports are serial, local, at most 100 MiB source and 30 seconds extracted
+audio, with a 30-second decoder deadline and explicit cleanup grace periods.
+Limits can be lowered. Common self-contained audio/video containers are allowed;
+WAV, MP3 and MP4 are verified here. Other codecs depend on your installed FFmpeg.
+No models or FFmpeg binaries are bundled. No microphone/camera recorder or HTTP
+upload endpoint is implemented; capture with your existing recording application.

@@ -22,6 +22,7 @@ class Configuration:
     max_voice_seconds: int = 30
     max_output_bytes: int = 10 * 1024**2
     max_output_seconds: int = 30
+    max_media_bytes: int = 100 * 1024**2
 
     def __post_init__(self) -> None:
         defaults = {
@@ -35,6 +36,7 @@ class Configuration:
             "max_voice_seconds": (1, 30),
             "max_output_bytes": (1, 10 * 1024**2),
             "max_output_seconds": (1, 30),
+            "max_media_bytes": (1, 100 * 1024**2),
         }
         for name, (low, high) in defaults.items():
             value = getattr(self, name)

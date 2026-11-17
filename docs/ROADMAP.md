@@ -30,3 +30,10 @@ profiles, generation, playback, regeneration, export and visible errors.
 M6 includes install/developer docs, consent/privacy, dependency/license and security
 review, known limitations and release tests. All integrations remain optional.
 Do not begin M2 through M6 without owner approval. No milestone scope changes.
+
+Owner-directed M1 input addition, 2026-11-17: provide a read-aloud reference script
+and accept recorded voice, existing audio files and video sound tracks through
+local selected-clip preparation. This expands reference import formats without
+changing M1's real-synthesis exit gate or authorizing M2+. Sample preparation,
+resource readback and decoder cleanup require their own evidence. In-app recording
+and automatic transcription are not part of this bounded task.
