@@ -25,3 +25,12 @@ behavioral cases; the fake remains test-only. No real engine or timeout runner.
 
 Owner selected MIT licensing. Added lightweight CI and GitHub Pages deployment
 workflows with pinned action revisions and no model dependencies.
+
+## M1 WAV export and project page
+
+Added shared strict PCM validation, independent output budgets, simulation-labelled
+atomic no-clobber WAV export through the Python API and `export-simulation` CLI.
+Strips non-audio metadata, rejects symlink/traversal targets and preserves inputs.
+Added export, failure cleanup and narration-to-export regression coverage.
+Added a static accessible Howl-style project page with ecosystem links, accurate
+milestone labels and working command/API documentation. No inference or uploads.

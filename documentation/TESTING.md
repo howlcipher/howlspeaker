@@ -52,3 +52,27 @@ Missing acceptance: output WAV format/duration and atomic export, real engine
 execution, timeout/cgroup enforcement, cancellation/descendant cleanup, resource
 measurements and human listening. The timeout in a request is not enforcement;
 provider mode declarations are not proof of execution or a sandbox.
+
+## Test impact assessment: M1 WAV export and GitHub page
+
+Changed behavior: shared strict PCM validation, independently bounded output,
+private atomic no-clobber export with embedded simulation provenance, Python API
+and export-simulation CLI. Existing 114 tests still express intended behavior;
+retained all of them. Added 33 cases covering playable output, restrictive mode,
+embedded label, name/path traversal, directory symlinks, existing-file/reference
+preservation, malformed/empty/truncated/overlong data, configured budgets, odd
+payload padding, metadata stripping, write/link failures and end-to-end fake
+narration to export. No obsolete or duplicate tests removed. Smallest appropriate
+tier: unit plus filesystem/CLI and fake-provider integration. Full lightweight
+regression required because shared validation and filesystem authority changed.
+
+Manual website verification: cached Chromium, desktop 1440x1000 and mobile 375x812,
+no horizontal page overflow or JS errors, persisted theme state, ecosystem menu
+Escape/focus behavior and screenshot inspection. No browser/model installation.
+Check JS syntax with `node --check site/script.js`. Site has no network services
+or uploads. No claim of a formal accessibility audit. Pages and CI must be checked
+on GitHub; local tests alone do not prove deployment.
+
+Not exercised: real synthesis, model memory/latency, inference descendant cleanup,
+human listening, MP3, normalization or M2+ workflows. An exported silent fixture
+is playable PCM but is not a real narration acceptance result.

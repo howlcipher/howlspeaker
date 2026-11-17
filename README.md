@@ -1,7 +1,8 @@
 # HowlSpeaker
 
 Local-first narration from authorized voice samples and scripts.
-M0 foundation, M1 voice validation and simulation-only coordination are available.
+M0 foundation, M1 voice validation, simulation coordination and WAV export
+are available.
 Speech generation is not implemented. No weights are bundled or downloaded.
 
 ## Install and verify
@@ -48,7 +49,7 @@ Configuration may lower these limits. Final-component symlinks, nonregular files
 invalid chunk lengths, duplicate data/format chunks and partial frames are rejected.
 Extended/float WAV and RF64 need conversion outside this command. Silence is valid
 PCM; intelligibility, speech content and resemblance are not assessed here.
-No source is copied to disk or uploaded. Callers must release profile references
+Voice validation copies no source to disk and uploads nothing. Callers must release profile references
 to discard in-memory data; secure erasure of Python memory is not guaranteed.
 
 ## Provider coordination status
@@ -60,8 +61,8 @@ before making one provider call. Generation settings are currently unsupported.
 Only trusted injected providers marked `simulation` are accepted. The fake exists
 only in tests; there is no fake or real synthesis command in the CLI.
 
-`SimulationResult` always labels its opaque bytes as simulation evidence. These
-bytes are size-checked, not validated as playable WAV or intelligible speech.
+`SimulationResult` always labels its opaque bytes as simulation evidence. The coordinator size-checks these bytes. ExportService separately validates PCM
+WAV format/duration; neither verifies intelligibility or speech quality.
 Provider errors are private and never retried. Timeout budgets are passed through,
 not enforced by this in-process test seam. Output size validation occurs after the
 provider returns and is not a memory sandbox. No real adapter may use this seam
@@ -74,3 +75,29 @@ Lightweight CI runs unit/integration tests, lint and packaging on pull requests
 and main. The Pages workflow publishes only the static `site/` directory, never
 voice files, models or local configuration. It can also be manually dispatched
 for a reviewed branch. No model downloads or inference run in CI.
+
+## Export labelled simulation audio
+
+```bash
+mkdir -p output
+howlspeaker export-simulation --input fixture.wav --output-dir output --name check.wav
+```
+
+This command validates existing PCM audio and exports it; it does not generate
+speech. Exported WAVs include an embedded simulation-only comment and the CLI
+returns JSON metadata with `evidence_kind: simulation`. See [CLI and API guide](docs/CLI.md).
+
+Output must be a simple WAV filename in an existing selected directory. Directory
+symlinks and traversal are rejected; existing files, links and references cannot
+be overwritten. Files are published atomically with mode 0600 using a same-directory
+hard link after writing/flushing a private temporary file. Filesystems without
+hard-link support fail safely; there is no unsafe overwrite fallback.
+Incoming non-audio metadata is stripped. The default output cap is 10 MiB and
+30 seconds, including the embedded label. Lower limits through JSON configuration
+with `max_output_bytes` and `max_output_seconds`. This is atomic publication,
+not a guarantee of directory-entry durability after power loss.
+
+Project page: https://howlcipher.github.io/howlspeaker/
+Repository: https://github.com/howlcipher/howlspeaker
+The current export/page work is on `feature/wav-export-and-project-page` pending
+pull-request review; clone that branch to try these additions before integration.

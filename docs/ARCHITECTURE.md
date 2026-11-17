@@ -37,9 +37,25 @@ metadata checks are not a security sandbox. Deadline and output byte checks do
 not establish process resource protection or playable audio. No inference runner
 or automatic retries are implemented.
 
+M1 output validation/export implemented: audio.py shares bounded local reads
+and strict PCM/container validation with voice.py. ExportService validates
+SimulationResult audio, strips non-audio chunks through standard-library wave,
+adds a fixed RIFF INFO simulation comment, then revalidates against independent
+output byte/duration limits. CLI `export-simulation` exposes the same API.
+Directory-descriptor traversal with O_NOFOLLOW pins the selected directory;
+a private temporary file is fsynced before atomic no-clobber hard-link publication.
+No sidecar is needed because the label stays inside the WAV; this avoids a
+partially published two-file pair. Existing targets are never replaced.
+
 Remaining M1 design: approved real adapter behind an OS-bounded child runner,
-measured timeout/failure/descendant cleanup, audio output validation and atomic WAV
-export. AudioProcessor uses established libraries/FFmpeg where needed;
+measured timeout/failure/descendant cleanup and real-output evidence handling. AudioProcessor uses established libraries/FFmpeg where needed;
 ExportService must reject traversal, symlink escapes and reference overwrite.
 Keep private files owner-readable and deletable. Introduce these only as needed.
 No provider registry, plugin loader, HTTP service, scheduler or database yet.
+
+Public project site: buildless HTML/CSS/JS in site/, separate from private audio.
+Uses the Howl shell/navy visual palette, local assets, semantic navigation,
+keyboard-accessible theme/ecosystem controls and accurate milestone disclosures.
+GitHub Actions deploys only site/ with minimal Pages/OIDC permissions. This
+static documentation is not the M5 application interface. No HTTP API added:
+CLI and Python endpoints satisfy current scope without server maintenance.

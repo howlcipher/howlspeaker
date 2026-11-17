@@ -6,8 +6,13 @@ build-backend = "setuptools.build_meta"
 name = "howlspeaker"
 version = "0.1.0"
 description = "Local-first authorized narration production"
+license = "MIT"
 requires-python = ">=3.12"
 dependencies = []
+
+[project.urls]
+Homepage = "https://howlcipher.github.io/howlspeaker/"
+Repository = "https://github.com/howlcipher/howlspeaker"
 
 [project.optional-dependencies]
 dev = ["pytest==9.0.3", "flake8==7.3.0"]
