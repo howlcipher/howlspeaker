@@ -24,3 +24,5 @@ recordings/
 output/
 .venv-*/
 .qwen-cache/
+profiles/
+.howlspeaker/

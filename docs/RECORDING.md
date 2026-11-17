@@ -112,3 +112,32 @@ Reproduce the opt-in smoke with `python scripts/smoke_media.py`. It generates on
 short test tones and a tiny video, verifies real MP3/MP4 extraction and no-audio
 rejection, then checks timeout/descendant cleanup with harmless sleeping children.
 It is excluded from the default suite and performs no inference or downloads.
+
+## Capture format and repeatable readings
+
+Preferred capture: uncompressed PCM WAV, mono, 24 kHz, 16-bit. A recorder's native
+44.1/48 kHz WAV is fine; do not repeatedly transcode it. Direct validation accepts
+the PCM formats listed in CLI.md. Phone audio/video can use prepare-sample; its
+output is canonical 24 kHz mono 16-bit PCM. Avoid background music, noise reduction
+that cuts words, echo, clipping and handling noise. Use a quiet room and steady
+microphone distance; do not shout to achieve a waveform size. There is no automatic
+recording-quality certification. Keep each complete reading under 30 seconds.
+
+Use the same supplied paragraph for every take. Do not read the labels aloud:
+
+1. natural_01 and natural_02: everyday conversation, comfortable pauses.
+2. narration_01 and narration_02: clear, engaged explanation, without exaggeration.
+3. relaxed_01 and relaxed_02: calm, slightly slower, still your normal voice.
+
+Aim around 15 to 25 seconds but preserve natural speech. If a relaxed reading
+exceeds 30 seconds, rerecord within the cap rather than truncate the final words.
+Record a little room tone around the complete reading, then select the full words
+inside the bounded clip. Keep microphone, room and recording settings consistent.
+Listen for missing words, retakes and plosives before registering the take. If you
+change or repeat words, correct that take's transcript; do not claim a text match.
+
+Store each as a separate private take using [the profile guide](PROFILES.md).
+This creates comparison material; no automatic blending, multi-reference training,
+or claim of improved voice fidelity is made. Measured audio metadata and subjective
+listening notes remain distinct. Original recordings are not uploaded or backed
+up by the code repository.

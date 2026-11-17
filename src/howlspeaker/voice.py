@@ -11,7 +11,7 @@ from howlspeaker.config import Configuration
 class VoiceProfile:
     """Validated snapshot; attestation does not prove identity or permission.
 
-    Private fields are excluded from repr. Profiles are not persisted in M1.
+    Private fields are excluded from repr. ProfileStore can persist snapshots.
     Future providers must consume this snapshot, never reopen the input path.
     """
 
@@ -67,6 +67,22 @@ def validate_voice(
     )
     settings = config if config is not None else Configuration()
     data = read_local_audio(path, settings.max_voice_bytes)
+    return validate_snapshot(
+        data, authorized=True, provenance=provenance, transcript=transcript,
+        require_transcript=require_transcript, config=settings,
+    )
+
+
+def validate_snapshot(
+    data: bytes, *, authorized: bool, provenance: str,
+    transcript: str | None = None, require_transcript: bool = False,
+    config: Configuration | None = None,
+) -> VoiceProfile:
+    """Validate a stored snapshot under current consent and audio limits."""
+    provenance, transcript = validate_attestation(
+        authorized, provenance, transcript, require_transcript,
+    )
+    settings = config if config is not None else Configuration()
     metadata = validate_pcm_wav(
         data, max_bytes=settings.max_voice_bytes,
         max_seconds=settings.max_voice_seconds,

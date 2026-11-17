@@ -1,0 +1,18 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Private persistent per-speaker/per-take snapshots, explicit swapping/deletion CLI and API, metadata Git exclusions and repeated-reading guidance",
+  "tests_added": [
+    "tests/test_profiles.py: 22 behavioral cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests scripts",
+    "node --check site/script.js",
+    "Wheel build and wheel-installed profile CLI/API checks"
+  ],
+  "rationale": "Retained 216 prior contracts, added 22 cases for distinct snapshots, private permissions, consent, default/custom locations, no-clobber/link cleanup, delete isolation, malformed/corrupt/oversize metadata, traversal/symlinks, lowered audio limits and Git ignores. Full regression protects shared validation/export helper and persistence authority. No obsolete/duplicate contracts removed. Real reference-to-provider handoff, inference, human quality comparison and protection from malicious same-user edits remain unverified. Text-only site update leaves interactions unchanged."
+}

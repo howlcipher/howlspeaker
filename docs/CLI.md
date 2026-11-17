@@ -45,7 +45,8 @@ print(profile.audio_metadata())
 
 The caller must have permission. The snapshot retains attestation, provenance and
 transcript in memory only. Attestation cannot prove speaker identity or consent.
-Do not log or serialize the profile's private fields. No profile storage exists.
+Do not log the profile's private fields. Explicit private storage is available
+through ProfileStore and the profile commands; see PROFILES.md.
 
 ## Export simulation WAV through Python
 
@@ -86,3 +87,11 @@ only in tests. No production fake is selectable. Deadlines are passed through,
 not enforced by the test seam. Real/remote declarations are rejected until a
 verified OS-bounded runner exists. Provider metadata is a trusted-code contract,
 not a sandbox or proof of model execution.
+
+
+## Private voice profiles
+
+Use `howlspeaker profile add/list/show/delete`; `--store` and `--config` go before
+the action. Explicit profile ID and take ID select one reference, with no global
+active speaker. See PROFILES.md for complete CLI/Python examples, default private
+location, consent/transcript persistence, deletion and Git exclusions.

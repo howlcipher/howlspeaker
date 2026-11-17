@@ -3,7 +3,7 @@
 | Gate | Objective | Exit evidence | State |
 | --- | --- | --- | --- |
 | M0 | Feasibility and foundation | Installed skeleton, baseline tests, engine/fallback recommendation, risks and next step | COMPLETE |
-| M1 | Minimum viable voice generation | Real playable intelligible WAV from authorized reference; actual reference use; measured resources; cleanup; tests | BLOCKED |
+| M1 | Minimum viable voice generation | Real playable intelligible WAV from authorized reference; actual reference use; measured resources; cleanup; tests | IN PROGRESS |
 | M2 | Reliable narration pipeline | Multi-paragraph output with independently verified ordering and completeness | NOT STARTED |
 | M3 | Naturalness and selective editing | Sentence replacement preserves surrounding audio, with listening comparisons | NOT STARTED |
 | M4 | Audio quality verification | Controlled defects trigger documented warnings and limitations | NOT STARTED |

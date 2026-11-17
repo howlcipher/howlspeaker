@@ -70,4 +70,20 @@ unbounded subprocess would be simpler but cannot provide the required memory and
 descendant controls, so there is no such fallback. Host tools are not bundled.
 ExportService reuses its existing publisher with a distinct authorized-reference
 label; simulation results retain their simulation label. Provenance/transcript
-remain private in-memory profile fields. No persistent profile store or recorder.
+remain private profile fields. Optional ProfileStore persistence is described
+below. No recorder is implemented.
+
+
+M1 reusable references: ProfileStore stores one versioned private JSON snapshot
+per speaker/take. Embedded base64 PCM avoids external file references and keeps
+consent, transcript and checksums atomic with audio. This costs about one third
+extra storage versus raw WAV; it avoids database dependencies and coordinated
+multi-file publication. A database is unnecessary for this small local store;
+separate WAV/JSON files are easier to browse but need consistency/recovery rules.
+Private roots (0700), files (0600), no-follow directory descriptors, bounded reads,
+checksum/audio/consent revalidation and atomic no-clobber publication protect the
+current workflow. Explicit load(profile_id, take) swaps references without global
+active-speaker state. Separate takes are not mixed, trained or embedded together.
+No encryption, identity proof or protection against malicious same-user edits is
+claimed. Delete removes one stored snapshot; backups and original recordings are
+separate. JSON is application data, never pickle or executable engine objects.

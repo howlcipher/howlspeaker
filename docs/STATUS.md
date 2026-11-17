@@ -3,23 +3,29 @@
 Verified 2026-11-17 UTC.
 Current milestone: M1. State: IN PROGRESS; real synthesis acceptance is pending.
 M0 remains COMPLETE. No M2+ work started.
-Current bounded task: approved pinned Qwen CPU runtime/download/load feasibility.
+Current bounded task: private swappable speaker/take profiles and repeated-reading
+capture guide, implemented and verified. Approved Qwen setup remains available.
 Last verified capability: sample-script and authorized audio/video prepare-sample
 CLI/Python API plus existing validation, simulation and WAV export. The optional
 isolated Qwen runtime now imports and loads the pinned base model offline on CPU.
 This is not synthesis evidence and no speak command is advertised yet.
 
-Latest full lightweight regression: 216 passed, 0 failed, 0 skipped; flake8 src,
-tests and scripts passed. Added 25 model download/setup guard cases; retained all
-191 previous tests. See test_impact_qwen.json and documentation/TESTING.md.
+Latest full lightweight regression: 238 passed, 0 failed, 0 skipped; flake8 src,
+tests and scripts plus JS syntax passed. Added 22 private-profile behavioral cases;
+retained all 216 prior tests. Wheel build and wheel-installed profile CLI passed.
+See test_impact_profiles.json and documentation/TESTING.md.
+New capability: profile add/list/show/delete CLI and ProfileStore API; per-speaker
+and per-take immutable snapshot selection with no global active user. Local store
+defaults outside Git; profiles/, voices/ and .howlspeaker/ metadata are ignored.
+Complete repeated-reading guide in RECORDING.md; private storage/API in PROFILES.md.
 Previous real media smoke remains documented in media_smoke.json. No real voice
 or inference smoke ran. CPU load used 1,310,674,944 bytes peak, swap 0, 10.6256s,
 exit 0. Download verified 12 files/2,516,104,532 bytes in 26.9689s, peak
 2,186,469,376 bytes, swap 0, exit 0. No model processes remain running.
 Full setup pins, source URLs, warnings and limits: QWEN_SETUP.md.
 
-Last completed commit before this task: 50d5884. See git log for the current
-signed Qwen preparation commit. Work remains on feature/wav-export-and-project-page
+Last completed commit before this task: 4f23d49 (verified Qwen setup). See git log
+for the current signed profile implementation commit. Work remains on feature/wav-export-and-project-page
 in PR #1; no merge. Public static page remains live; PUBLICATION.md records its
 verified deployment. No uploads or public synthesis endpoints were introduced.
 Known regressions: none in the lightweight suite. Linux user systemd and verified

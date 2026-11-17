@@ -119,3 +119,22 @@ Missing acceptance: reference-conditioned generation, real provider interaction,
 its timeout/OOM cleanup and resource costs, intelligibility and human listening.
 Neither CPU warning is hidden or counted as a clean synthesis result. No systemd
 or network runs in the default suite. No heavy test silently skipped.
+
+
+## Test impact assessment: M1 private profile takes
+
+Changed behavior: optional persistent consent/audio/transcript snapshots, explicit
+speaker/take selection and private CLI add/list/show/delete; export directory
+helper can now create private parents only when explicitly requested. Existing
+216 tests still express intended behavior, retained unchanged. Added 22 cases
+covering private permissions, different speaker/take snapshots, deletion isolation,
+consent before IO, default/custom stores, immutable publication, interrupted-link
+cleanup, corrupt audio/text/consent/JSON, traversal, symlinks, current audio limits,
+bounded reads and Git exclusion of metadata/media. No obsolete or duplicate
+contracts removed. Smallest tier: unit plus filesystem and CLI integration.
+Shared voice/export helpers and persistence authority warrant full lightweight
+regression. Build wheel and exercise installed CLI; site changes are text only,
+with unchanged interaction/layout code, checked with existing JS syntax gate.
+No new browser/device/model workload. No real profile supplied and no inference
+executed; take selection into the real provider and human quality comparison
+remain unverified. Hashes detect corruption, never authenticate consent or words.

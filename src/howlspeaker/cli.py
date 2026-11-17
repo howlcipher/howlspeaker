@@ -14,6 +14,7 @@ from howlspeaker.diagnostics import configure_logging
 from howlspeaker.voice import validate_voice, validate_attestation
 from howlspeaker.media import MediaImporter, REFERENCE_SCRIPT
 from howlspeaker.process import SystemdMediaRunner
+from howlspeaker.profiles import ProfileStore
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -59,6 +60,26 @@ def main(argv: list[str] | None = None) -> int:
     prepare.add_argument("--audio-stream", type=int, default=0)
     prepare.add_argument("--ffmpeg", default="ffmpeg")
     prepare.add_argument("--config", type=Path)
+    profiles = commands.add_parser("profile",
+                                   help="Private speaker/take storage")
+    profiles.add_argument("--store", type=Path)
+    profiles.add_argument("--config", type=Path)
+    actions = profiles.add_subparsers(dest="profile_action", required=True)
+    actions.add_parser("list", help="List IDs, without private contents")
+    for action in ("add", "show", "delete"):
+        command = actions.add_parser(action)
+        command.add_argument("--id", required=True)
+        command.add_argument("--take", required=True)
+        if action == "add":
+            command.add_argument("--voice", type=Path, required=True)
+            command.add_argument("--authorized", action="store_true")
+            command.add_argument("--provenance", required=True)
+            command.add_argument("--delivery", default="unspecified",
+                                 choices=("unspecified", "natural",
+                                          "narration", "relaxed"))
+            transcript = command.add_mutually_exclusive_group()
+            transcript.add_argument("--transcript")
+            transcript.add_argument("--transcript-file", type=Path)
     args = parser.parse_args(argv)
     if args.command == "sample-script":
         print(REFERENCE_SCRIPT)
@@ -67,18 +88,32 @@ def main(argv: list[str] | None = None) -> int:
     configure_logging(logger, sys.stderr)
     try:
         settings = load_configuration(args.config)
+        if args.command == "profile":
+            store = ProfileStore(args.store, settings)
+            if args.profile_action == "add":
+                validate_attestation(args.authorized, args.provenance,
+                                     args.transcript)
+                transcript = _read_transcript(args)
+                profile = validate_voice(
+                    args.voice, authorized=args.authorized,
+                    provenance=args.provenance, transcript=transcript,
+                    config=settings,
+                )
+                result = store.add(args.id, args.take, profile,
+                                   delivery=args.delivery)
+            elif args.profile_action == "list":
+                result = store.list()
+            elif args.profile_action == "show":
+                result = store.describe(args.id, args.take)
+            else:
+                store.delete(args.id, args.take)
+                result = {"deleted": True}
+            print(json.dumps(result, indent=2))
+            return 0
         if args.command == "prepare-sample":
             validate_attestation(args.authorized, args.provenance,
                                  args.transcript)
-            transcript = args.transcript
-            if args.transcript_file is not None:
-                try:
-                    transcript = read_local_audio(
-                        args.transcript_file, 20000,
-                    ).decode("utf-8")
-                except (ValueError, UnicodeError):
-                    raise ValueError("Cannot load reference transcript") \
-                        from None
+            transcript = _read_transcript(args)
             importer = MediaImporter(
                 SystemdMediaRunner(settings, ffmpeg=args.ffmpeg), settings,
             )
@@ -116,3 +151,12 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("", extra={"event": "config_validated"})
     print(json.dumps(settings.to_dict(), indent=2))
     return 0
+
+
+def _read_transcript(args):
+    if args.transcript_file is None:
+        return args.transcript
+    try:
+        return read_local_audio(args.transcript_file, 20000).decode("utf-8")
+    except (ValueError, UnicodeError):
+        raise ValueError("Cannot load reference transcript") from None

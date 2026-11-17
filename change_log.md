@@ -64,3 +64,12 @@ model manifest. Added bounded sequential size/hash-verified private download
 with cache validation, path/redirect protections and no retries. Opt-in setup
 checker requires actual cgroup limits and offline loading. Approved isolated
 runtime import and model download succeeded; real voice synthesis remains pending.
+
+## M1 private reusable speaker takes
+
+Added explicit per-speaker/per-take private snapshot storage with consent,
+transcript, technical metadata and checksums. CLI and Python API add/list/select/
+delete takes with no overwrite or global active speaker. Default data stays
+outside Git; additional profile-folder ignore rules protect local metadata too.
+Added same-script six-take recording instructions and capture-format guidance.
+No model training, automatic reference blending or quality scoring is introduced.

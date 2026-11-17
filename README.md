@@ -142,3 +142,14 @@ The approved isolated Qwen runtime and pinned model files are being checked unde
 3 GiB soft / 5 GiB hard memory limits with no swap. Core CLI/API stays independent
 of the engine. See [setup pins, safeguards and evidence](docs/QWEN_SETUP.md).
 Real synthesis is not yet demonstrated; no `speak` command is advertised.
+
+## Private reusable voice profiles
+
+`howlspeaker profile add/list/show/delete` manages separate speakers and takes.
+Profiles default outside the repository, with private permissions and explicit
+consent/transcript storage. `ProfileStore.load(profile_id, take)` selects a
+revalidated snapshot without global speaker state. In-repo profiles/, voices/,
+.howlspeaker/, samples/ and recordings/ are ignored, including their JSON/text.
+See [profile commands and API](docs/PROFILES.md) and
+[the six-take recording plan](docs/RECORDING.md). Each take uses the same public
+[read-aloud script](examples/reference_reading.txt); no automatic merging is claimed.

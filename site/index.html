@@ -87,7 +87,7 @@
             <h3>CLI and Python API</h3>
             <p>Install locally with Python 3.12 or newer. No model weights are bundled. The core package has no runtime dependencies.</p>
             <p><code>sample-script</code> supplies read-aloud text. <code>prepare-sample</code> extracts an authorized audio or video clip into a mono WAV. <code>validate-voice</code> and <code>export-simulation</code> provide validation and labelled fixture export.</p>
-            <p>Use <code>MediaImporter</code>, <code>validate_voice</code> and <code>ExportService</code> from Python. No in-app recorder or automatic transcript is implemented.</p>
+            <p>Use <code>MediaImporter</code>, <code>ProfileStore</code> and <code>ExportService</code> from Python. The <code>profile</code> CLI stores private speaker/take snapshots with explicit selection and deletion. No in-app recorder or automatic transcript is implemented.</p>
             <a class="text-link" href="https://github.com/howlcipher/howlspeaker/blob/feature/wav-export-and-project-page/docs/CLI.md">Read the command and API guide ↗</a>
           </div>
           <div class="terminal">
@@ -120,7 +120,7 @@ howlspeaker export-simulation --input fixture.wav \
 
       <aside class="privacy-panel" aria-labelledby="privacy-title">
         <span class="privacy-symbol" aria-hidden="true">[LOCAL]</span>
-        <div><h2 id="privacy-title">Permission before processing.</h2><p>No recordings or scripts are uploaded by these tools. The project page has no file upload, analytics or inference service. Authorization is a user attestation, not proof of identity or consent. Remote inference will require explicit opt-in.</p></div>
+        <div><h2 id="privacy-title">Permission before processing.</h2><p>No recordings or scripts are uploaded by these tools. Profiles default to private local storage outside the repository. Record the same script as separate natural, narration and relaxed takes; each is selected individually, without automatic blending. The project page has no file upload, analytics or inference service. Authorization is a user attestation, not proof of identity or consent. Remote inference will require explicit opt-in.</p></div>
       </aside>
 
       <section id="roadmap" class="section" aria-labelledby="roadmap-title">

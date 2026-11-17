@@ -17,14 +17,19 @@ from howlspeaker.voice import VoiceProfile, validate_attestation
 SIMULATION_LABEL = b"HowlSpeaker: simulation only; not real inference\0"
 
 
-def _open_directory(path: Path) -> int:
-    """Pin an existing output directory without following any symlink."""
+def _open_directory(path: Path, *, create: bool = False) -> int:
+    """Pin a directory without symlinks; optionally create private parents."""
     if ".." in path.parts:
         raise ValueError("Output directory traversal is not supported")
     descriptor = os.open(path.anchor or ".", os.O_RDONLY | os.O_DIRECTORY)
     try:
         parts = path.parts[1:] if path.anchor else path.parts
         for part in parts:
+            if create:
+                try:
+                    os.mkdir(part, 0o700, dir_fd=descriptor)
+                except FileExistsError:
+                    pass
             child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
                             dir_fd=descriptor)
             os.close(descriptor)
