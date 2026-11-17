@@ -101,3 +101,21 @@ Missing acceptance: real user recordings and human assessment, full codec matrix
 recording devices, persistent voice profile consent records, automatic transcript,
 model memory/latency and actual reference-conditioned synthesis. No formal codec
 sandbox or audio-quality certification is claimed. No obsolete tests removed.
+
+## Test impact assessment: M1 Qwen setup
+
+Changed behavior: explicit pinned model cache validation/download and guarded
+opt-in setup checker. Retained 191 prior contracts; added 25 cases for correct
+artifact reuse, corrupt/empty/oversize downloads, invalid manifests, traversal,
+symlinks, no-clobber invalid cache, failed transfer cleanup, redirect authority
+and exact cgroup budgets before expensive actions. No obsolete or duplicate
+tests removed. Smallest tier: unit plus filesystem integration. Existing tests
+still express intended behavior. Full lightweight regression is required because
+of filesystem/network/resource authority. Engine deps stay outside core runtime.
+
+Actual optional protected checks: dependency install, import, pinned download,
+and offline CPU model load. These do not use a voice and are not synthesis tests.
+Missing acceptance: reference-conditioned generation, real provider interaction,
+its timeout/OOM cleanup and resource costs, intelligibility and human listening.
+Neither CPU warning is hidden or counted as a clean synthesis result. No systemd
+or network runs in the default suite. No heavy test silently skipped.

@@ -39,3 +39,19 @@ verified, not silently removed. An initial fixture-generation attempt produced
 no data because FFmpeg declined an existing anonymous output descriptor; the
 smoke now explicitly writes only that owned descriptor and requires nonempty
 fixtures. Failed probes are not counted as successful media acceptance.
+
+## Approved Qwen CPU preparation, 2026-11-17
+
+No real synthesis or voice benchmark. Verified limits stayed 3 GiB high,
+5 GiB max, zero swap, 150% CPU, 192 tasks; one job at a time.
+
+| Check | Wall seconds | Peak bytes | Swap peak | Exit |
+| --- | --- | --- | --- | --- |
+| Dependency setup | 42.245 service | systemd reported 946.3 MB | 0 | 0 |
+| Qwen import | 18.653 service | systemd reported 746.5 MB | 0 | 0 |
+| Pinned model download/hash check | 26.9689 work | 2186469376 | 0 | 0 |
+| Offline CPU BF16/eager model load | 10.6256 work | 1310674944 | 0 | 0 |
+
+All transient services finished and no model remains running. Load is subject to
+lazy mapped pages and does not predict generation peak/time. See QWEN_SETUP.md
+for exact pins, approval, execution envelope, missing SoX and CPU warnings.

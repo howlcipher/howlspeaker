@@ -56,3 +56,11 @@ smoke. No speech generation, automatic transcript, recorder or model download.
 Backed up the audio/video preparation changes in PR #1, verified green 191-test
 GitHub CI and republished the recording instructions to Pages. Checked the public
 content and mobile rendering. No merge, model download or synthesis claimed.
+
+## M1 approved Qwen runtime preparation
+
+Added separately pinned CPU engine dependencies, artifact inventory and exact
+model manifest. Added bounded sequential size/hash-verified private download
+with cache validation, path/redirect protections and no retries. Opt-in setup
+checker requires actual cgroup limits and offline loading. Approved isolated
+runtime import and model download succeeded; real voice synthesis remains pending.

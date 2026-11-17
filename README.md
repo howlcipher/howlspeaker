@@ -135,3 +135,10 @@ Limits can be lowered. Common self-contained audio/video containers are allowed;
 WAV, MP3 and MP4 are verified here. Other codecs depend on your installed FFmpeg.
 No models or FFmpeg binaries are bundled. No microphone/camera recorder or HTTP
 upload endpoint is implemented; capture with your existing recording application.
+
+## Optional Qwen CPU experiment
+
+The approved isolated Qwen runtime and pinned model files are being checked under
+3 GiB soft / 5 GiB hard memory limits with no swap. Core CLI/API stays independent
+of the engine. See [setup pins, safeguards and evidence](docs/QWEN_SETUP.md).
+Real synthesis is not yet demonstrated; no `speak` command is advertised.

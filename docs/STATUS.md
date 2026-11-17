@@ -1,45 +1,46 @@
 # Status
 
 Verified 2026-11-17 UTC.
-Current milestone: M1. State: BLOCKED for real synthesis. M0 remains COMPLETE.
-Current bounded task: owner-directed authorized audio/video sample ingestion and
-read-aloud script, implemented and locally verified. No M2+ work started.
-Last verified capability: sample-script CLI; prepare-sample CLI/Python API extracts
-a selected audio/video sound track into a private authorized-reference WAV;
-existing validation, simulation and export remain passing.
-Full lightweight regression: 191 passed, 0 failed, 0 skipped. Lint includes
-src/, tests/ and scripts/. Real media smoke passes MP3, MP4, no-audio rejection
-and timeout/descendant cleanup. Peaks/durations/exit statuses in BENCHMARKS.md
-and media_smoke.json. This is media decoding, not inference evidence.
-Verified implementation commit: a2f01aa (media preparation); deployed page
-source: db1dd0b. See git log for the documentation evidence revision.
-Current work remains on feature/wav-export-and-project-page in PR #1; no merge.
-See git log and PR checks for final head. Website publication evidence is in
-PUBLICATION.md; updated media guidance is live and public HTTP/mobile checks pass.
-Pages run 44006468922 and PR CI run 44006476706 succeeded.
-Known regressions: none in the lightweight suite. Linux user systemd and compatible
-host tools are required; no unrestricted fallback. Other codec combinations are
-untested. No in-app microphone/camera recorder or HTTP upload endpoint exists.
+Current milestone: M1. State: IN PROGRESS; real synthesis acceptance is pending.
+M0 remains COMPLETE. No M2+ work started.
+Current bounded task: approved pinned Qwen CPU runtime/download/load feasibility.
+Last verified capability: sample-script and authorized audio/video prepare-sample
+CLI/Python API plus existing validation, simulation and WAV export. The optional
+isolated Qwen runtime now imports and loads the pinned base model offline on CPU.
+This is not synthesis evidence and no speak command is advertised yet.
 
-Next recommended task: prepare a pinned Qwen CPU dependency/download inventory
-and executable smoke proposal using the existing resource guard pattern. Verify
-exact engine/model revisions, dependencies, licenses, download/storage estimates
-and whether the approved budget is plausible before requesting model approval.
-Acceptance: a concrete reproducible short reference-conditioned smoke plan with
-bounded runtime, result validation, measurements and cleanup; no surprise downloads.
-Inventory/research needs no download approval. Weights/dependencies, real inference,
-system installation, uploads, costs or budget increases need explicit approval.
+Latest full lightweight regression: 216 passed, 0 failed, 0 skipped; flake8 src,
+tests and scripts passed. Added 25 model download/setup guard cases; retained all
+191 previous tests. See test_impact_qwen.json and documentation/TESTING.md.
+Previous real media smoke remains documented in media_smoke.json. No real voice
+or inference smoke ran. CPU load used 1,310,674,944 bytes peak, swap 0, 10.6256s,
+exit 0. Download verified 12 files/2,516,104,532 bytes in 26.9689s, peak
+2,186,469,376 bytes, swap 0, exit 0. No model processes remain running.
+Full setup pins, source URLs, warnings and limits: QWEN_SETUP.md.
 
-Real synthesis blockers: approved model/dependency inventory/download, compatible
-isolated runtime and an authorized real reference. CPU speed and 5 GiB model fit
-remain unknown; RX 580 GPU compatibility unverified. Host FFmpeg is available even
-though it is absent from the container PATH. No install was performed.
-M1 completion still requires intelligible reference-conditioned WAV, measured
-resource/failure cleanup evidence and human listening. It is not demonstrated.
+Last completed commit before this task: 50d5884. See git log for the current
+signed Qwen preparation commit. Work remains on feature/wav-export-and-project-page
+in PR #1; no merge. Public static page remains live; PUBLICATION.md records its
+verified deployment. No uploads or public synthesis endpoints were introduced.
+Known regressions: none in the lightweight suite. Linux user systemd and verified
+host-visible tool paths remain required; no unrestricted fallback. Real model
+load succeeded but mapped weights and generation may have higher memory demands.
 
-No model downloads or real inference. Sample source files stay local and unchanged.
-Prepared WAV contains only canonical PCM and a fixed authorized-reference label;
-private provenance/transcript are retained in memory, not logged or persisted.
-The read-aloud script is never assigned as an existing-file transcript by default.
-Public site remains static documentation, with no voice upload or model endpoint.
-Test impact assessment: documentation/TESTING.md and docs/test_impact_media.json.
+Outstanding blockers: owner-supplied authorized audio/video path, exact words
+spoken in the selected clip and permission basis; measured real reference-
+conditioned generation; output listening and human assessment. Isolated runtime
+and model download approval was given and used. No additional approval needed
+for the existing bounded local attempt with an authorized sample. System package
+installation, higher budgets, uploads or paid services still require approval.
+SoX executable is absent; upstream import warns but model load succeeds.
+FlashAttention is intentionally absent for CPU. Transitive unspecified license
+metadata still needs release review; the model and engine declare Apache-2.0.
+
+Next recommended task: integrate the real provider through a protected serial
+worker and run one short authorized reference-conditioned CPU smoke within the
+120-second initialization-plus-generation budget. First obtain the reference
+path/transcript/permission basis. If generation fails on time, memory or missing
+system dependencies, preserve evidence and stop rather than raise limits/retry.
+Acceptance: actual reference used, intelligible playable WAV, measured peak/time/
+exit and failure cleanup, relevant unit/integration regression, owner listening.
+M1 remains incomplete until all of those pass. No M2+ authorization.

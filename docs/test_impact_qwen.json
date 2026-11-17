@@ -1,0 +1,18 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Pinned verified sequential model artifacts and protected opt-in Qwen setup checker",
+  "tests_added": [
+    "tests/test_model_files.py: 23 artifact/cache/path/redirect cases",
+    "tests/test_qwen_check.py: 2 cgroup authority cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests scripts",
+    "node --check site/script.js"
+  ],
+  "rationale": "Retained all 191 contracts, added 25 unit/filesystem/guard cases. Actual approved protected dependencies/import/download/offline model load passed. No real reference, generation, real provider timeout/OOM cleanup or listening acceptance claimed; warnings remain documented. Full regression covers network/filesystem/resource authority changes."
+}

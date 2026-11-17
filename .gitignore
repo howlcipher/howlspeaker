@@ -22,3 +22,5 @@ voices/
 samples/
 recordings/
 output/
+.venv-*/
+.qwen-cache/
