@@ -51,7 +51,7 @@
           <h1 id="hero-title">Give your words<br>a voice.<br><em>Keep control.</em></h1>
           <p class="lead">A narration workbench built toward one job: turn your script and an authorized voice sample into a polished recording you can inspect, repair and reproduce.</p>
           <div class="actions"><a class="button primary" href="#tools">Try the local tools <span aria-hidden="true">↓</span></a><a class="button" href="https://github.com/howlcipher/howlspeaker">View on GitHub ↗</a></div>
-          <p class="fine">Available now: reference validation and labelled WAV export.<br>Voice synthesis, selective repair and quality reports are planned.</p>
+          <p class="fine">Available now: audio/video sample preparation and labelled WAV export.<br>Voice synthesis, selective repair and quality reports are planned.</p>
         </div>
         <figure class="signal-panel">
           <div class="panel-label"><span>01 / VOICE SIGNAL</span><span class="chip">DESIGN TARGET</span></div>
@@ -74,7 +74,7 @@
       <section id="workflow" class="section" aria-labelledby="workflow-title">
         <div class="section-heading"><span class="index">01</span><div><p class="eyebrow">THE PRODUCTION PATH</p><h2 id="workflow-title">From reference to recording.</h2></div></div>
         <div class="workflow-grid">
-          <article><span class="step">A / AVAILABLE</span><h3>Start with permission.</h3><p>Validate a bounded local WAV, record your authorization and describe its source. A transcript can be required by the provider.</p></article>
+          <article><span class="step">A / AVAILABLE</span><h3>Start with permission.</h3><p>Read the supplied script or choose your own authorized audio/video clip. Prepare a bounded local WAV and describe its source.</p></article>
           <article><span class="step">B / IN DEVELOPMENT</span><h3>Bring the script.</h3><p>Keep generation separate from the engine. Input gates and simulation coordination work; real inference still needs a measured smoke test.</p></article>
           <article><span class="step">C / PLANNED</span><h3>Listen. Repair. Export.</h3><p>Longer narration, sentence regeneration and measurable quality warnings come later. Labelled simulation WAV export is available now.</p></article>
         </div>
@@ -86,8 +86,8 @@
           <div>
             <h3>CLI and Python API</h3>
             <p>Install locally with Python 3.12 or newer. No model weights are bundled. The core package has no runtime dependencies.</p>
-            <p><code>validate-voice</code> checks authorized PCM WAV references. <code>export-simulation</code> publishes playable, labelled fixture audio without overwriting files.</p>
-            <p>Use <code>validate_voice</code> and <code>ExportService</code> from Python. The simulation coordinator has a test-only provider seam.</p>
+            <p><code>sample-script</code> supplies read-aloud text. <code>prepare-sample</code> extracts an authorized audio or video clip into a mono WAV. <code>validate-voice</code> and <code>export-simulation</code> provide validation and labelled fixture export.</p>
+            <p>Use <code>MediaImporter</code>, <code>validate_voice</code> and <code>ExportService</code> from Python. No in-app recorder or automatic transcript is implemented.</p>
             <a class="text-link" href="https://github.com/howlcipher/howlspeaker/blob/feature/wav-export-and-project-page/docs/CLI.md">Read the command and API guide ↗</a>
           </div>
           <div class="terminal">
@@ -100,9 +100,15 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -e .
 
-<span class="comment"># Validate a voice you are authorized to use</span>
-howlspeaker validate-voice --voice sample.wav \
-  --authorized --provenance "My voice; my recording"
+<span class="comment"># Record yourself reading this text</span>
+mkdir -p samples
+howlspeaker sample-script &gt; samples/transcript.txt
+
+<span class="comment"># Prepare your recording or existing audio/video</span>
+howlspeaker prepare-sample --input my-recording.mp4 \
+  --authorized --provenance "My voice; my recording" \
+  --transcript-file samples/transcript.txt --seconds 25 \
+  --output-dir samples --name reference.wav
 
 <span class="comment"># Export existing fixture audio, not speech generation</span>
 mkdir -p output
@@ -121,7 +127,7 @@ howlspeaker export-simulation --input fixture.wav \
         <div class="section-heading"><span class="index">03</span><div><p class="eyebrow">EVIDENCE BEFORE FEATURES</p><h2 id="roadmap-title">A gated path to narration.</h2></div></div>
         <ol class="roadmap">
           <li><span class="milestone">M0</span><div><h3>Feasibility &amp; foundation</h3><p>Package, baseline tests, engine comparison and verified resource-limit probes.</p></div><span class="state">COMPLETE</span></li>
-          <li class="current"><span class="milestone">M1</span><div><h3>Minimum viable voice generation</h3><p>Validation, simulation coordination and export work. Real speech remains blocked pending approved model setup and bounded inference.</p></div><span class="state">IN DEVELOPMENT</span></li>
+          <li class="current"><span class="milestone">M1</span><div><h3>Minimum viable voice generation</h3><p>Audio/video sample preparation, simulation coordination and export work. Real speech remains blocked pending approved model setup and bounded inference.</p></div><span class="state">IN DEVELOPMENT</span></li>
           <li><span class="milestone">M2–M4</span><div><h3>Production &amp; repair</h3><p>Ordered narration, selective regeneration and objective quality reports.</p></div><span class="state">PLANNED</span></li>
           <li><span class="milestone">M5–M6</span><div><h3>Local interface &amp; release</h3><p>A browser workflow, optional Howl integrations and reproducible installation.</p></div><span class="state">PLANNED</span></li>
         </ol>
