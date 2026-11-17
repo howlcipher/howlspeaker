@@ -93,9 +93,9 @@ def test_malformed_reference_never_reaches_provider(reference, provider):
 
 
 @pytest.mark.parametrize("kind", ["real", "remote", None, 1])
-def test_non_simulated_providers_are_blocked(provider, kind):
+def test_unsupported_provider_kinds_are_blocked(provider, kind):
     provider.execution_kind = kind
-    with pytest.raises(ValueError, match="simulation"):
+    with pytest.raises(ValueError, match="Unsupported provider"):
         NarrationService(provider)
     assert not provider.calls
 

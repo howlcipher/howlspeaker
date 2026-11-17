@@ -1,0 +1,56 @@
+{
+  "verified_date": "2026-11-17",
+  "model_repository": "Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+  "model_revision": "5d83992436eae1d760afd27aff78a71d676296fc",
+  "model_bytes": 2516104532,
+  "real_inference_tested": false,
+  "reference_used": false,
+  "budgets": {
+    "memory_high_bytes": 3221225472,
+    "memory_max_bytes": 5368709120,
+    "memory_swap_max_bytes": 0,
+    "cpu_quota_percent": 150,
+    "tasks_max": 192,
+    "load_timeout_seconds": 120
+  },
+  "checks": [
+    {
+      "kind": "dependency_install",
+      "service_seconds": 42.245,
+      "systemd_peak_display": "946.3M",
+      "swap_peak_bytes": 0,
+      "exit_status": 0
+    },
+    {
+      "kind": "import",
+      "service_seconds": 18.653,
+      "systemd_peak_display": "746.5M",
+      "swap_peak_bytes": 0,
+      "exit_status": 0
+    },
+    {
+      "kind": "verified_download",
+      "work_seconds": 26.968905847985297,
+      "peak_memory_bytes": 2186469376,
+      "swap_peak_bytes": 0,
+      "exit_status": 0
+    },
+    {
+      "kind": "offline_cpu_bf16_eager_load",
+      "work_seconds": 10.625643958017463,
+      "peak_memory_bytes": 1310674944,
+      "swap_peak_bytes": 0,
+      "exit_status": 0
+    }
+  ],
+  "remaining_warnings": [
+    "No SoX executable; upstream import warning",
+    "FlashAttention intentionally absent on CPU"
+  ],
+  "limitations": [
+    "Model pages can be mapped lazily; load peak is not inference peak",
+    "No authorized real reference provided",
+    "No generation or human listening performed"
+  ],
+  "cleanup": "All transient services completed; no howlspeaker units loaded"
+}

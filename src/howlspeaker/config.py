@@ -1,4 +1,4 @@
-"""Strict M0 configuration; resource values are budgets, not enforcement."""
+"""Strict configuration; resource values are budgets, not enforcement."""
 
 import json
 from dataclasses import asdict, dataclass
@@ -20,6 +20,9 @@ class Configuration:
     max_script_chars: int = 500
     max_voice_bytes: int = 10 * 1024**2
     max_voice_seconds: int = 30
+    max_output_bytes: int = 10 * 1024**2
+    max_output_seconds: int = 30
+    max_media_bytes: int = 100 * 1024**2
 
     def __post_init__(self) -> None:
         defaults = {
@@ -31,6 +34,9 @@ class Configuration:
             "timeout_seconds": (1, 120), "max_script_chars": (1, 500),
             "max_voice_bytes": (1, 10 * 1024**2),
             "max_voice_seconds": (1, 30),
+            "max_output_bytes": (1, 10 * 1024**2),
+            "max_output_seconds": (1, 30),
+            "max_media_bytes": (1, 100 * 1024**2),
         }
         for name, (low, high) in defaults.items():
             value = getattr(self, name)
@@ -39,7 +45,7 @@ class Configuration:
         if self.memory_high_bytes > self.memory_max_bytes:
             raise ValueError("Memory high exceeds memory maximum")
         if self.provider != "disabled" or self.remote_enabled is not False:
-            raise ValueError("Inference is unavailable in M0")
+            raise ValueError("Automatic/remote providers are disabled")
 
     def to_dict(self) -> dict:
         return asdict(self)

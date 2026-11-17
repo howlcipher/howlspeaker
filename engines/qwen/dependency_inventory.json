@@ -1,0 +1,705 @@
+{
+  "target": "CPython 3.12 / Linux x86_64 CPU",
+  "pypi_artifacts": [
+    {
+      "package": "accelerate",
+      "version": "1.12.0",
+      "license": "Apache",
+      "artifact": "accelerate-1.12.0-py3-none-any.whl",
+      "artifact_bytes": 380935,
+      "sha256": "3e2091cd341423207e2f084a6654b1efcd250dc326f2a37d6dde446e07cabb11"
+    },
+    {
+      "package": "annotated-doc",
+      "version": "0.0.6",
+      "license": "MIT",
+      "artifact": "annotated_doc-0.0.6-py3-none-any.whl",
+      "artifact_bytes": 5293,
+      "sha256": "361ca0950cc7082f53fa69e9328409f40a62c61e57e0a47e1825a08078a58a53"
+    },
+    {
+      "package": "annotated-types",
+      "version": "0.8.0",
+      "license": "MIT",
+      "artifact": "annotated_types-0.8.0-py3-none-any.whl",
+      "artifact_bytes": 13427,
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0"
+    },
+    {
+      "package": "anyio",
+      "version": "4.16.0",
+      "license": "MIT",
+      "artifact": "anyio-4.16.0-py3-none-any.whl",
+      "artifact_bytes": 134521,
+      "sha256": "c66ae634e0b8228396b801741beb3294326d4b6102f7bba4041c0dfb58c29026"
+    },
+    {
+      "package": "brotli",
+      "version": "1.2.1",
+      "license": "MIT",
+      "artifact": "brotli-1.2.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "artifact_bytes": 1420478,
+      "sha256": "4b9dd0173ca5e01d1eb307d3c184fe8c09bdc168ede560889b1018d216d38c61"
+    },
+    {
+      "package": "certifi",
+      "version": "2026.10.23",
+      "license": "MPL-2.0",
+      "artifact": "certifi-2026.10.23-py3-none-any.whl",
+      "artifact_bytes": 135082,
+      "sha256": "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1"
+    },
+    {
+      "package": "cffi",
+      "version": "2.1.1",
+      "license": "MIT-0",
+      "artifact": "cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "artifact_bytes": 221822,
+      "sha256": "c1453022f490d2459a11819d83ad1d586e9ff65a12ac3e705ffebd46d3685dcf"
+    },
+    {
+      "package": "charset-normalizer",
+      "version": "3.5.2",
+      "license": "MIT",
+      "artifact": "charset_normalizer-3.5.2-py3-none-any.whl",
+      "artifact_bytes": 68872,
+      "sha256": "b6b751274acb69d77b3323d6b7dbaa3c7fdfc1eb829b7eb61d262f32e1af9685"
+    },
+    {
+      "package": "click",
+      "version": "8.5.1",
+      "license": "BSD-3-Clause",
+      "artifact": "click-8.5.1-py3-none-any.whl",
+      "artifact_bytes": 126163,
+      "sha256": "8bb5376d2006950386f8c6427613334a2acadc5f559cb80e638d00b4df957e37"
+    },
+    {
+      "package": "cloudpickle",
+      "version": "3.1.2",
+      "license": "BSD-3-Clause",
+      "artifact": "cloudpickle-3.1.2-py3-none-any.whl",
+      "artifact_bytes": 22228,
+      "sha256": "9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a"
+    },
+    {
+      "package": "decorator",
+      "version": "5.3.1",
+      "license": "BSD-2-Clause",
+      "artifact": "decorator-5.3.1-py3-none-any.whl",
+      "artifact_bytes": 10365,
+      "sha256": "f47fe6fdbd2edd623ecfe36875d37aba411624e2670dd395dddae1358689bb3c"
+    },
+    {
+      "package": "einops",
+      "version": "0.8.2",
+      "license": "MIT",
+      "artifact": "einops-0.8.2-py3-none-any.whl",
+      "artifact_bytes": 65638,
+      "sha256": "54058201ac7087911181bfec4af6091bb59380360f069276601256a76af08193"
+    },
+    {
+      "package": "fastapi",
+      "version": "0.163.1",
+      "license": "MIT",
+      "artifact": "fastapi-0.163.1-py3-none-any.whl",
+      "artifact_bytes": 154541,
+      "sha256": "68f2d8050f5c3583121c0d203046cc7def5c16a7d6c43a0e7707a8ea610fe2d3"
+    },
+    {
+      "package": "filelock",
+      "version": "4.2.10",
+      "license": "MIT",
+      "artifact": "filelock-4.2.10-py3-none-any.whl",
+      "artifact_bytes": 218040,
+      "sha256": "9479aaeb4db20b5a53e3da28493edd24720b66b8a0b84030aa56ccdf243d6857"
+    },
+    {
+      "package": "flatbuffers",
+      "version": "25.12.19",
+      "license": "Apache 2.0",
+      "artifact": "flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "artifact_bytes": 26661,
+      "sha256": "7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4"
+    },
+    {
+      "package": "fsspec",
+      "version": "2026.9.0",
+      "license": "BSD-3-Clause",
+      "artifact": "fsspec-2026.9.0-py3-none-any.whl",
+      "artifact_bytes": 221738,
+      "sha256": "8dd6e646e99ea382bd85f97a45e6b526a442d79423a7dc673f1e2756d05fcb5f"
+    },
+    {
+      "package": "gradio",
+      "version": "6.17.3",
+      "license": "Apache-2.0",
+      "artifact": "gradio-6.17.3-py3-none-any.whl",
+      "artifact_bytes": 32329363,
+      "sha256": "7e52c65bfbb7bd75ac1c28cb38f93b01e5f6a2ff013224e6213533451bfee517"
+    },
+    {
+      "package": "gradio-client",
+      "version": "2.5.0",
+      "license": "Apache-2.0",
+      "artifact": "gradio_client-2.5.0-py3-none-any.whl",
+      "artifact_bytes": 59952,
+      "sha256": "d43e2179c29076292a76485ad7ed2e6eaa19d14ac58283bd7f5beabfe4ca958c"
+    },
+    {
+      "package": "groovy",
+      "version": "0.1.2",
+      "license": "UNSPECIFIED",
+      "artifact": "groovy-0.1.2-py3-none-any.whl",
+      "artifact_bytes": 14090,
+      "sha256": "7f7975bab18c729a257a8b1ae9dcd70b7cafb1720481beae47719af57c35fa64"
+    },
+    {
+      "package": "h11",
+      "version": "0.16.0",
+      "license": "MIT",
+      "artifact": "h11-0.16.0-py3-none-any.whl",
+      "artifact_bytes": 37515,
+      "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86"
+    },
+    {
+      "package": "hf-gradio",
+      "version": "0.4.1",
+      "license": "MIT",
+      "artifact": "hf_gradio-0.4.1-py3-none-any.whl",
+      "artifact_bytes": 4482,
+      "sha256": "76b8cb8be6abe62d74c1ad2d35b42f0629db89aa9e1a8d033cecfe7c856eeab3"
+    },
+    {
+      "package": "hf-xet",
+      "version": "1.8.0",
+      "license": "Apache-2.0",
+      "artifact": "hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "artifact_bytes": 4292483,
+      "sha256": "29dab7c904cd1914a0439c6e1306c12c7497c8bd32290fbe563ebf51ca4b6d6d"
+    },
+    {
+      "package": "httpcore",
+      "version": "1.0.9",
+      "license": "BSD-3-Clause",
+      "artifact": "httpcore-1.0.9-py3-none-any.whl",
+      "artifact_bytes": 78784,
+      "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55"
+    },
+    {
+      "package": "httpx",
+      "version": "0.28.1",
+      "license": "BSD-3-Clause",
+      "artifact": "httpx-0.28.1-py3-none-any.whl",
+      "artifact_bytes": 73517,
+      "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad"
+    },
+    {
+      "package": "huggingface-hub",
+      "version": "0.36.2",
+      "license": "Apache",
+      "artifact": "huggingface_hub-0.36.2-py3-none-any.whl",
+      "artifact_bytes": 566395,
+      "sha256": "48f0c8eac16145dfce371e9d2d7772854a4f591bcb56c9cf548accf531d54270"
+    },
+    {
+      "package": "idna",
+      "version": "3.20",
+      "license": "BSD-3-Clause",
+      "artifact": "idna-3.20-py3-none-any.whl",
+      "artifact_bytes": 69583,
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c"
+    },
+    {
+      "package": "jinja2",
+      "version": "3.1.6",
+      "license": "UNSPECIFIED",
+      "artifact": "jinja2-3.1.6-py3-none-any.whl",
+      "artifact_bytes": 134899,
+      "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"
+    },
+    {
+      "package": "joblib",
+      "version": "1.6.0",
+      "license": "BSD-3-Clause",
+      "artifact": "joblib-1.6.0-py3-none-any.whl",
+      "artifact_bytes": 306115,
+      "sha256": "3dbbf9f6e4b592a2357b854608e980fe6390d131d7a82f011a377ef2ebef7aba"
+    },
+    {
+      "package": "lazy-loader",
+      "version": "0.6",
+      "license": "BSD-3-Clause",
+      "artifact": "lazy_loader-0.6-py3-none-any.whl",
+      "artifact_bytes": 8791,
+      "sha256": "77253be3391b06124a0e16105bd663b6c54470af1a9ca8e1cf026f38d58ed056"
+    },
+    {
+      "package": "librosa",
+      "version": "1.0.1",
+      "license": "ISC",
+      "artifact": "librosa-1.0.1-py3-none-any.whl",
+      "artifact_bytes": 301475,
+      "sha256": "bc26f947ca08307c5ff116b219560372aa340213d7f3cc2cf1f3f02b4e251147"
+    },
+    {
+      "package": "llvmlite",
+      "version": "0.50.0",
+      "license": "BSD-2-Clause AND Apache-2.0 WITH LLVM-exception",
+      "artifact": "llvmlite-0.50.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 59696588,
+      "sha256": "d501e5103076b9a14be885d2574dc2f6793171aa54a853d1244e011d476f1399"
+    },
+    {
+      "package": "markdown-it-py",
+      "version": "4.3.0",
+      "license": "UNSPECIFIED",
+      "artifact": "markdown_it_py-4.3.0-py3-none-any.whl",
+      "artifact_bytes": 96951,
+      "sha256": "7aa1511a46c39138de78d9eba92ce47e63124d8003fc98b3a351909e04239efa"
+    },
+    {
+      "package": "markupsafe",
+      "version": "3.0.4",
+      "license": "BSD-3-Clause",
+      "artifact": "markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 22985,
+      "sha256": "8e124f974786f831d6043728e38296969d3579db8896fe004682f5758e613581"
+    },
+    {
+      "package": "mdurl",
+      "version": "0.1.2",
+      "license": "UNSPECIFIED",
+      "artifact": "mdurl-0.1.2-py3-none-any.whl",
+      "artifact_bytes": 9979,
+      "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+    },
+    {
+      "package": "mpmath",
+      "version": "1.3.0",
+      "license": "BSD",
+      "artifact": "mpmath-1.3.0-py3-none-any.whl",
+      "artifact_bytes": 536198,
+      "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c"
+    },
+    {
+      "package": "msgpack",
+      "version": "1.2.4",
+      "license": "Apache-2.0",
+      "artifact": "msgpack-1.2.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 475652,
+      "sha256": "c4d5bbdbea8f5669b3a734d6c226772804fb120848f99cbe63a0ddee63b049c9"
+    },
+    {
+      "package": "narwhals",
+      "version": "2.28.0",
+      "license": "MIT",
+      "artifact": "narwhals-2.28.0-py3-none-any.whl",
+      "artifact_bytes": 490591,
+      "sha256": "1f69d6385ec30e2fa6e1fdeb37c562ecabd0f713f6f3e3b58a668c5c9df9567f"
+    },
+    {
+      "package": "networkx",
+      "version": "3.7",
+      "license": "BSD-3-Clause",
+      "artifact": "networkx-3.7-py3-none-any.whl",
+      "artifact_bytes": 2142205,
+      "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+    },
+    {
+      "package": "numba",
+      "version": "0.68.1",
+      "license": "BSD",
+      "artifact": "numba-0.68.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 3890001,
+      "sha256": "8b33fee239194b9b6cb9b176f3c2563b94e5882fd846748ad0cf960daeee5406"
+    },
+    {
+      "package": "numpy",
+      "version": "2.5.5",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "artifact": "numpy-2.5.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 15720599,
+      "sha256": "704d819265e5d1064d932968e9ee85fff2103ccc78c05b878c06943ba27b8507"
+    },
+    {
+      "package": "onnxruntime",
+      "version": "1.32.0",
+      "license": "MIT License",
+      "artifact": "onnxruntime-1.32.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 27780211,
+      "sha256": "99e1074c4b2197accd5073052a465361be17b89c093b8ffb6e6bd8f986c52df8"
+    },
+    {
+      "package": "opentelemetry-api",
+      "version": "1.45.2",
+      "license": "Apache-2.0",
+      "artifact": "opentelemetry_api-1.45.2-py3-none-any.whl",
+      "artifact_bytes": 60335,
+      "sha256": "2cbd737377e710ee740d261c94e93fa0f08e6d037c18f17513cc0a2d94479a34"
+    },
+    {
+      "package": "orjson",
+      "version": "3.13.0",
+      "license": "MPL-2.0 AND (Apache-2.0 OR MIT)",
+      "artifact": "orjson-3.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "artifact_bytes": 130612,
+      "sha256": "bceadfd314bd238f584fc229a4bbaf0e573597e7a026dec5429fbf29fd66c641"
+    },
+    {
+      "package": "packaging",
+      "version": "26.3",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "artifact": "packaging-26.3-py3-none-any.whl",
+      "artifact_bytes": 129956,
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+    },
+    {
+      "package": "pandas",
+      "version": "3.1.1",
+      "license": "BSD-3-Clause",
+      "artifact": "pandas-3.1.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 12031410,
+      "sha256": "028490c8ac2e03e18c9b08b7f3612e149b03570209bcf741d23833a7a5377ab2"
+    },
+    {
+      "package": "pillow",
+      "version": "12.3.0",
+      "license": "MIT-CMU",
+      "artifact": "pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 6940830,
+      "sha256": "78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91"
+    },
+    {
+      "package": "platformdirs",
+      "version": "4.14.5",
+      "license": "MIT",
+      "artifact": "platformdirs-4.14.5-py3-none-any.whl",
+      "artifact_bytes": 35402,
+      "sha256": "8e778c6fa421516f4d3369449f8df3b0e1b72c0e0005fe88e3ec772d0a14e750"
+    },
+    {
+      "package": "pooch",
+      "version": "1.9.0",
+      "license": "BSD-3-Clause",
+      "artifact": "pooch-1.9.0-py3-none-any.whl",
+      "artifact_bytes": 67175,
+      "sha256": "f265597baa9f760d25ceb29d0beb8186c243d6607b0f60b83ecf14078dbc703b"
+    },
+    {
+      "package": "protobuf",
+      "version": "7.36.2",
+      "license": "3-Clause BSD License",
+      "artifact": "protobuf-7.36.2-py3-none-any.whl",
+      "artifact_bytes": 179806,
+      "sha256": "bdb3a345d48db958e6ce1f18e508beb0cc981d64f24088427549c866cd039f1e"
+    },
+    {
+      "package": "psutil",
+      "version": "7.2.2",
+      "license": "BSD-3-Clause",
+      "artifact": "psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 155560,
+      "sha256": "076a2d2f923fd4821644f5ba89f059523da90dc9014e85f8e45a5774ca5bc6f9"
+    },
+    {
+      "package": "pycparser",
+      "version": "3.12",
+      "license": "BSD-3-Clause",
+      "artifact": "pycparser-3.12-py3-none-any.whl",
+      "artifact_bytes": 62600,
+      "sha256": "a076f3f489b39b43ed13563a1dafe42447445bec2e294154ec5c57fcdda4c85e"
+    },
+    {
+      "package": "pydantic",
+      "version": "2.14.3",
+      "license": "MIT",
+      "artifact": "pydantic-2.14.3-py3-none-any.whl",
+      "artifact_bytes": 494071,
+      "sha256": "3f7b347782ab7e4cf4c798496ae3a82787d9f21ec12676a9c564355eeef8daa8"
+    },
+    {
+      "package": "pydantic-core",
+      "version": "2.50.4",
+      "license": "MIT",
+      "artifact": "pydantic_core-2.50.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "artifact_bytes": 2261727,
+      "sha256": "c81d98e27d9d9261909dcccab1ba5d6ea1c98b0bb9470e368604614fd1d36ddd"
+    },
+    {
+      "package": "pydub",
+      "version": "0.25.1",
+      "license": "MIT",
+      "artifact": "pydub-0.25.1-py2.py3-none-any.whl",
+      "artifact_bytes": 32327,
+      "sha256": "65617e33033874b59d87db603aa1ed450633288aefead953b30bded59cb599a6"
+    },
+    {
+      "package": "pygments",
+      "version": "2.21.0",
+      "license": "BSD-2-Clause",
+      "artifact": "pygments-2.21.0-py3-none-any.whl",
+      "artifact_bytes": 1250147,
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9"
+    },
+    {
+      "package": "python-dateutil",
+      "version": "4.0.0",
+      "license": "BSD-3-Clause",
+      "artifact": "python_dateutil-4.0.0-py3-none-any.whl",
+      "artifact_bytes": 92853,
+      "sha256": "a5e246f79eb80475e691bf93862cead98decd8a498cf53ba0516fcdc0f50dc1c"
+    },
+    {
+      "package": "python-multipart",
+      "version": "0.0.34",
+      "license": "Apache-2.0",
+      "artifact": "python_multipart-0.0.34-py3-none-any.whl",
+      "artifact_bytes": 32585,
+      "sha256": "ebacd224bd686eee2f9aa1066a657affe07435a185834e05e5235e2e59173e91"
+    },
+    {
+      "package": "pytz",
+      "version": "2026.6",
+      "license": "MIT",
+      "artifact": "pytz-2026.6-py2.py3-none-any.whl",
+      "artifact_bytes": 506321,
+      "sha256": "7fed3fee8fd6bd4a2b7b75a8d56021d0624127bf69bd5691f115db929ac570b3"
+    },
+    {
+      "package": "pyyaml",
+      "version": "6.0.3",
+      "license": "MIT",
+      "artifact": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 807870,
+      "sha256": "ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc"
+    },
+    {
+      "package": "qwen-tts",
+      "version": "0.1.1",
+      "license": "Apache-2.0",
+      "artifact": "qwen_tts-0.1.1-py3-none-any.whl",
+      "artifact_bytes": 113529,
+      "sha256": "11a290d8dabc7ef91a90c54478c8ab19b3edb1d85c0882313721892bdc4af15d"
+    },
+    {
+      "package": "regex",
+      "version": "2026.11.15",
+      "license": "Apache-2.0 AND CNRI-Python",
+      "artifact": "regex-2026.11.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 809168,
+      "sha256": "f3758c3b1689ab778f3e1ae0f9aa4d22b8e4efc362e2e4cfdbbc5a208fed0bc1"
+    },
+    {
+      "package": "requests",
+      "version": "2.34.2",
+      "license": "Apache-2.0",
+      "artifact": "requests-2.34.2-py3-none-any.whl",
+      "artifact_bytes": 73075,
+      "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0"
+    },
+    {
+      "package": "rich",
+      "version": "15.0.0",
+      "license": "MIT",
+      "artifact": "rich-15.0.0-py3-none-any.whl",
+      "artifact_bytes": 310654,
+      "sha256": "33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb"
+    },
+    {
+      "package": "safehttpx",
+      "version": "0.1.7",
+      "license": "UNSPECIFIED",
+      "artifact": "safehttpx-0.1.7-py3-none-any.whl",
+      "artifact_bytes": 8959,
+      "sha256": "c4f4a162db6993464d7ca3d7cc4af0ffc6515a606dfd220b9f82c6945d869cde"
+    },
+    {
+      "package": "safetensors",
+      "version": "0.8.0",
+      "license": "UNSPECIFIED",
+      "artifact": "safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "artifact_bytes": 516040,
+      "sha256": "fd6f3f93c9a0a7cc2788ee63fb763353d4bd2e89b0751bc78fcf7dda00bea774"
+    },
+    {
+      "package": "scikit-learn",
+      "version": "1.9.1",
+      "license": "BSD-3-Clause",
+      "artifact": "scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 9166043,
+      "sha256": "e5d7b18a5b9dca241a74695f3275fa4c895a9dadc72b3d8df5fa9d1083c9b83e"
+    },
+    {
+      "package": "scipy",
+      "version": "1.18.1",
+      "license": "See upstream license text and classifiers",
+      "artifact": "scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 35344199,
+      "sha256": "f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218"
+    },
+    {
+      "package": "semantic-version",
+      "version": "2.10.0",
+      "license": "BSD",
+      "artifact": "semantic_version-2.10.0-py2.py3-none-any.whl",
+      "artifact_bytes": 15552,
+      "sha256": "de78a3b8e0feda74cabc54aab2da702113e33ac9d9eb9d2389bcf1f58b7d9177"
+    },
+    {
+      "package": "setuptools",
+      "version": "84.2.1",
+      "license": "MIT",
+      "artifact": "setuptools-84.2.1-py3-none-any.whl",
+      "artifact_bytes": 876263,
+      "sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2"
+    },
+    {
+      "package": "shellingham",
+      "version": "1.5.4",
+      "license": "ISC License",
+      "artifact": "shellingham-1.5.4-py2.py3-none-any.whl",
+      "artifact_bytes": 9755,
+      "sha256": "7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"
+    },
+    {
+      "package": "soundfile",
+      "version": "0.14.0",
+      "license": "BSD 3-Clause License",
+      "artifact": "soundfile-0.14.0-py2.py3-none-any.whl",
+      "artifact_bytes": 26799,
+      "sha256": "8ba81ae3a89fd5ab3bef8a8eb481fbbe794e806309675a89b4df48b8d31908a8"
+    },
+    {
+      "package": "sox",
+      "version": "1.5.0",
+      "license": "BSD-3-Clause",
+      "artifact": "sox-1.5.0.tar.gz",
+      "artifact_bytes": 63905,
+      "sha256": "12c7be5bb1f548d891fe11e82c08cf5f1a1d74e225298f60082e5aeb2469ada0"
+    },
+    {
+      "package": "soxr",
+      "version": "1.1.0",
+      "license": "LGPL-2.1-or-later",
+      "artifact": "soxr-1.1.0-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "artifact_bytes": 240413,
+      "sha256": "3b033078e86f3c4a658e5697fac8995764fad9e799563616b630136b613167f1"
+    },
+    {
+      "package": "starlette",
+      "version": "1.10.0",
+      "license": "BSD-3-Clause",
+      "artifact": "starlette-1.10.0-py3-none-any.whl",
+      "artifact_bytes": 80571,
+      "sha256": "478c0ab3b4ced6e82719849c118fa406f0278a3499c1a898cd15cd31bdc38ce4"
+    },
+    {
+      "package": "sympy",
+      "version": "1.14.0",
+      "license": "BSD",
+      "artifact": "sympy-1.14.0-py3-none-any.whl",
+      "artifact_bytes": 6299353,
+      "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5"
+    },
+    {
+      "package": "threadpoolctl",
+      "version": "3.8.0",
+      "license": "BSD-3-Clause",
+      "artifact": "threadpoolctl-3.8.0-py3-none-any.whl",
+      "artifact_bytes": 32091,
+      "sha256": "f1b49c82704d50f13ffae019c727b0fa4f6791a58f48f06a09c45face1be66da"
+    },
+    {
+      "package": "tokenizers",
+      "version": "0.22.2",
+      "license": "UNSPECIFIED",
+      "artifact": "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "artifact_bytes": 3274982,
+      "sha256": "369cc9fc8cc10cb24143873a0d95438bb8ee257bb80c71989e3ee290e8d72c67"
+    },
+    {
+      "package": "tomlkit",
+      "version": "0.14.0",
+      "license": "MIT",
+      "artifact": "tomlkit-0.14.0-py3-none-any.whl",
+      "artifact_bytes": 39310,
+      "sha256": "592064ed85b40fa213469f81ac584f67a4f2992509a7c3ea2d632208623a3680"
+    },
+    {
+      "package": "tqdm",
+      "version": "4.70.1",
+      "license": "MPL-2.0 AND MIT",
+      "artifact": "tqdm-4.70.1-py3-none-any.whl",
+      "artifact_bytes": 80199,
+      "sha256": "c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73"
+    },
+    {
+      "package": "transformers",
+      "version": "4.57.3",
+      "license": "Apache 2.0 License",
+      "artifact": "transformers-4.57.3-py3-none-any.whl",
+      "artifact_bytes": 11993463,
+      "sha256": "c77d353a4851b1880191603d36acb313411d3577f6e2897814f333841f7003f4"
+    },
+    {
+      "package": "typer",
+      "version": "0.29.1",
+      "license": "MIT",
+      "artifact": "typer-0.29.1-py3-none-any.whl",
+      "artifact_bytes": 121064,
+      "sha256": "00dbc549c13428bec1be55fe1f4d0fb8c6637a310e4f178ef14abe9534ee7b58"
+    },
+    {
+      "package": "typing-extensions",
+      "version": "4.16.0",
+      "license": "PSF-2.0",
+      "artifact": "typing_extensions-4.16.0-py3-none-any.whl",
+      "artifact_bytes": 45571,
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    },
+    {
+      "package": "typing-inspection",
+      "version": "0.4.5",
+      "license": "MIT",
+      "artifact": "typing_inspection-0.4.5-py3-none-any.whl",
+      "artifact_bytes": 14874,
+      "sha256": "bc210535442b39e1bf2805e0c7a17dfd6a4ace760c84c7f7d16245d23a6b1c39"
+    },
+    {
+      "package": "tzdata",
+      "version": "2026.6",
+      "license": "Apache-2.0",
+      "artifact": "tzdata-2026.6-py2.py3-none-any.whl",
+      "artifact_bytes": 348210,
+      "sha256": "0a10eec6e13ef16b627fabed9a5f2ba61a62b1c67f327305f4e7e412a70b4aec"
+    },
+    {
+      "package": "urllib3",
+      "version": "2.8.0",
+      "license": "MIT",
+      "artifact": "urllib3-2.8.0-py3-none-any.whl",
+      "artifact_bytes": 135717,
+      "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3"
+    },
+    {
+      "package": "uvicorn",
+      "version": "0.54.0",
+      "license": "BSD-3-Clause",
+      "artifact": "uvicorn-0.54.0-py3-none-any.whl",
+      "artifact_bytes": 87427,
+      "sha256": "505bdb0f318731d45f1f712071fc781a8981f6847a31c902c9f5e652d4f67faf"
+    }
+  ],
+  "pypi_estimated_bytes": 247763981,
+  "cpu_torch_bytes": 184378187,
+  "cpu_torchaudio_bytes": 495619,
+  "unknown_license_packages": [
+    "groovy",
+    "jinja2",
+    "markdown-it-py",
+    "mdurl",
+    "safehttpx",
+    "safetensors",
+    "tokenizers"
+  ]
+}

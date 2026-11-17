@@ -19,7 +19,8 @@ M1 voice validation implemented: VoiceProfile holds a validated immutable audio
 snapshot, authorization attestation, provenance and optional transcript.
 `validate_voice` checks authority before reading and bounds reads through a
 nonblocking, no-follow regular-file descriptor. Container and PCM metadata checks
-precede decoding with standard-library wave. No persistent profile store exists.
+precede decoding with standard-library wave. Optional ProfileStore storage is
+described below.
 
 M1 provider seam implemented: a structural SynthesisProvider protocol declares
 execution kind, transcript requirement and one synthesize(request) method.
@@ -37,9 +38,69 @@ metadata checks are not a security sandbox. Deadline and output byte checks do
 not establish process resource protection or playable audio. No inference runner
 or automatic retries are implemented.
 
+M1 output validation/export implemented: audio.py shares bounded local reads
+and strict PCM/container validation with voice.py. ExportService validates
+SimulationResult audio, strips non-audio chunks through standard-library wave,
+adds a fixed RIFF INFO simulation comment, then revalidates against independent
+output byte/duration limits. CLI `export-simulation` exposes the same API.
+Directory-descriptor traversal with O_NOFOLLOW pins the selected directory;
+a private temporary file is fsynced before atomic no-clobber hard-link publication.
+No sidecar is needed because the label stays inside the WAV; this avoids a
+partially published two-file pair. Existing targets are never replaced.
+
 Remaining M1 design: approved real adapter behind an OS-bounded child runner,
-measured timeout/failure/descendant cleanup, audio output validation and atomic WAV
-export. AudioProcessor uses established libraries/FFmpeg where needed;
+measured timeout/failure/descendant cleanup and real-output evidence handling. AudioProcessor uses established libraries/FFmpeg where needed;
 ExportService must reject traversal, symlink escapes and reference overwrite.
 Keep private files owner-readable and deletable. Introduce these only as needed.
 No provider registry, plugin loader, HTTP service, scheduler or database yet.
+
+Public project site: buildless HTML/CSS/JS in site/, separate from private audio.
+Uses the Howl shell/navy visual palette, local assets, semantic navigation,
+keyboard-accessible theme/ecosystem controls and accurate milestone disclosures.
+GitHub Actions deploys only site/ with minimal Pages/OIDC permissions. This
+static documentation is not the M5 application interface. No HTTP API added:
+CLI and Python endpoints satisfy current scope without server maintenance.
+
+M1 media intake: MediaImporter prepares a bounded authorized clip from a seekable
+private source snapshot; SystemdMediaRunner serializes local host conversions,
+verifies actual cgroup/file-size/network limits, and invokes established FFmpeg
+code for extraction/resampling. No codec/DSP algorithm is reimplemented. Pipe-only
+input was rejected as the default because ordinary MP4 files may require seeking;
+a private regular descriptor avoids container/host path coupling. A direct
+unbounded subprocess would be simpler but cannot provide the required memory and
+descendant controls, so there is no such fallback. Host tools are not bundled.
+ExportService reuses its existing publisher with a distinct authorized-reference
+label; simulation results retain their simulation label. Provenance/transcript
+remain private profile fields. Optional ProfileStore persistence is described
+below. No recorder is implemented.
+
+
+M1 reusable references: ProfileStore stores one versioned private JSON snapshot
+per speaker/take. Embedded base64 PCM avoids external file references and keeps
+consent, transcript and checksums atomic with audio. This costs about one third
+extra storage versus raw WAV; it avoids database dependencies and coordinated
+multi-file publication. A database is unnecessary for this small local store;
+separate WAV/JSON files are easier to browse but need consistency/recovery rules.
+Private roots (0700), files (0600), no-follow directory descriptors, bounded reads,
+checksum/audio/consent revalidation and atomic no-clobber publication protect the
+current workflow. Explicit load(profile_id, take) swaps references without global
+active-speaker state. Separate takes are not mixed, trained or embedded together.
+No encryption, identity proof or protection against malicious same-user edits is
+claimed. Delete removes one stored snapshot; backups and original recordings are
+separate. JSON is application data, never pickle or executable engine objects.
+
+
+M1 experimental synthesis: NarrationService.generate validates a VoiceProfile and
+script before one local provider call, independently validates WAV/resources and
+returns GeneratedResult marked generated_unreviewed. Simulation remains separate.
+QwenProvider serializes an immutable snapshot/script/transcript into an anonymous
+private descriptor; no reference paths or raw text enter argv. ProtectedRunner
+extracts the existing media execution path for reuse, keeping the 30-second media
+cap and the common legacy lock. It enforces the configured total inference cap
+(up to 120 seconds), cgroups, offline socket policy, file size and tree cleanup.
+Reusing the guard avoids divergent protection logic; a second specialized runner
+would isolate changes but duplicate safety code, while an in-process engine could
+not safely enforce memory/time budgets. The engine package imports ML libraries
+only after guard checks and pinned read-only model verification. It is installed
+in the explicitly configured isolated runtime; no source-path mapping is assumed.
+No dynamic plugin registry, daemon, queue or HTTP service is introduced.

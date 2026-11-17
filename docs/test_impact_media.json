@@ -1,0 +1,18 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Authorized audio/video selected-clip intake, read-aloud script CLI/artifact, transcript file option, distinct private reference export, guarded serial host FFmpeg worker with measured limits and cleanup",
+  "tests_added": [
+    "tests/test_media.py: 28 intake/CLI/reference cases",
+    "tests/test_process.py: 16 process/budget/cleanup cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests scripts",
+    ".venv/bin/python scripts/smoke_media.py"
+  ],
+  "rationale": "Retained all 147 existing contracts. Added 44 cases for consent/text/clip/track limits, private handoff and labels, malformed output, unit budget/report checks, serialization, cancellation and timeout. Real opt-in MP3/MP4 synthetic media and no-audio/descendant cleanup smoke passed under verified limits. No real voice/model inference, recording-device, persistent-profile, full-codec or quality acceptance claimed."
+}

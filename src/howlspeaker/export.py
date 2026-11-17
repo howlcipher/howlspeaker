@@ -1,0 +1,166 @@
+"""Private atomic publication of labelled reference and output WAV files."""
+
+import io
+import os
+import re
+import struct
+import uuid
+import wave
+from pathlib import Path
+
+from howlspeaker.audio import validate_pcm_wav
+from howlspeaker.config import Configuration
+from howlspeaker.provider import GeneratedResult, SimulationResult
+from howlspeaker.voice import VoiceProfile, validate_attestation
+
+
+SIMULATION_LABEL = b"HowlSpeaker: simulation only; not real inference\0"
+
+
+def _open_directory(path: Path, *, create: bool = False) -> int:
+    """Pin a directory without symlinks; optionally create private parents."""
+    if ".." in path.parts:
+        raise ValueError("Output directory traversal is not supported")
+    descriptor = os.open(path.anchor or ".", os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        parts = path.parts[1:] if path.anchor else path.parts
+        for part in parts:
+            if create:
+                try:
+                    os.mkdir(part, 0o700, dir_fd=descriptor)
+                except FileExistsError:
+                    pass
+            child = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                            dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+        return descriptor
+    except BaseException:
+        os.close(descriptor)
+        raise
+
+
+def _labelled_wav(data: bytes, label: bytes = SIMULATION_LABEL) -> bytes:
+    """Retain PCM samples, stripping incoming metadata before labelling."""
+    output = io.BytesIO()
+    with wave.open(io.BytesIO(data), "rb") as source:
+        with wave.open(output, "wb") as destination:
+            destination.setparams(source.getparams())
+            destination.writeframes(source.readframes(source.getnframes()))
+    canonical = output.getvalue()
+    # RIFF chunks have even-byte padding; wave omits it for odd data payloads.
+    if len(canonical) % 2:
+        canonical += b"\0"
+    comment = b"ICMT" + struct.pack("<I", len(label))
+    comment += label + b"\0" * (len(label) % 2)
+    info = b"INFO" + comment
+    labelled = canonical + b"LIST" + struct.pack("<I", len(info)) + info
+    return labelled[:4] + struct.pack("<I", len(labelled) - 8) + labelled[8:]
+
+
+class ExportService:
+    def __init__(self, config: Configuration | None = None) -> None:
+        self._config = config if config is not None else Configuration()
+
+    @staticmethod
+    def check_destination(output_dir: Path, name: str) -> None:
+        validate_output_name(name)
+        descriptor = None
+        try:
+            descriptor = _open_directory(output_dir)
+            try:
+                os.stat(name, dir_fd=descriptor, follow_symlinks=False)
+            except FileNotFoundError:
+                return
+            raise ValueError("Output already exists; overwrite is forbidden")
+        except OSError:
+            raise ValueError("Output directory is unavailable or unsafe") \
+                from None
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+
+    def export_simulation(
+        self, result: SimulationResult, output_dir: Path, name: str,
+    ) -> dict:
+        if (not isinstance(result, SimulationResult)
+                or result.evidence_kind != "simulation"):
+            raise ValueError("Only labelled simulation results are allowed")
+        return self._export(result.audio_bytes, output_dir, name,
+                            SIMULATION_LABEL, "simulation")
+
+    def export_generated(
+        self, result: GeneratedResult, output_dir: Path, name: str,
+    ) -> dict:
+        if (not isinstance(result, GeneratedResult)
+                or result.evidence_kind != "generated_unreviewed"):
+            raise ValueError("An unreviewed generated result is required")
+        return self._export(
+            result.audio_bytes, output_dir, name,
+            b"HowlSpeaker: synthetic speech; human review required\0",
+            "generated_unreviewed",
+        )
+
+    def export_reference(
+        self, profile: VoiceProfile, output_dir: Path, name: str,
+    ) -> dict:
+        if not isinstance(profile, VoiceProfile):
+            raise ValueError("A validated voice profile is required")
+        validate_attestation(profile.authorized, profile.provenance,
+                             profile.transcript)
+        return self._export(
+            profile.audio_bytes, output_dir, name,
+            b"HowlSpeaker: authorized reference; not generated speech\0",
+            "authorized_reference", reference=True,
+        )
+
+    def _export(
+        self, data: bytes, output_dir: Path, name: str,
+        label: bytes, evidence_kind: str, *, reference: bool = False,
+    ) -> dict:
+        validate_output_name(name)
+        limits = dict(
+            max_bytes=(self._config.max_voice_bytes if reference
+                       else self._config.max_output_bytes),
+            max_seconds=(self._config.max_voice_seconds if reference
+                         else self._config.max_output_seconds),
+        )
+        validate_pcm_wav(data, **limits)
+        labelled = _labelled_wav(data, label)
+        metadata = validate_pcm_wav(labelled, **limits)
+        descriptor = None
+        temporary = ".howlspeaker-" + uuid.uuid4().hex + ".tmp"
+        created = False
+        try:
+            descriptor = _open_directory(output_dir)
+            file_fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL
+                              | os.O_NOFOLLOW, 0o600, dir_fd=descriptor)
+            created = True
+            with os.fdopen(file_fd, "wb") as target:
+                target.write(labelled)
+                target.flush()
+                os.fsync(target.fileno())
+            # Link is atomic and fails if any destination already exists.
+            os.link(temporary, name, src_dir_fd=descriptor,
+                    dst_dir_fd=descriptor, follow_symlinks=False)
+        except OSError:
+            raise ValueError("Cannot publish WAV; check directory and name") \
+                from None
+        finally:
+            if descriptor is not None:
+                try:
+                    if created:
+                        os.unlink(temporary, dir_fd=descriptor)
+                except OSError:
+                    raise ValueError("Cannot clean temporary export file") \
+                        from None
+                finally:
+                    os.close(descriptor)
+        return metadata | {"evidence_kind": evidence_kind, "filename": name}
+
+
+def validate_output_name(name):
+    if (not isinstance(name, str)
+            or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,119}\.wav",
+                            name) is None):
+        raise ValueError("Output name must be a simple WAV filename")

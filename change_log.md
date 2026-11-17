@@ -25,3 +25,65 @@ behavioral cases; the fake remains test-only. No real engine or timeout runner.
 
 Owner selected MIT licensing. Added lightweight CI and GitHub Pages deployment
 workflows with pinned action revisions and no model dependencies.
+
+## M1 WAV export and project page
+
+Added shared strict PCM validation, independent output budgets, simulation-labelled
+atomic no-clobber WAV export through the Python API and `export-simulation` CLI.
+Strips non-audio metadata, rejects symlink/traversal targets and preserves inputs.
+Added export, failure cleanup and narration-to-export regression coverage.
+Added a static accessible Howl-style project page with ecosystem links, accurate
+milestone labels and working command/API documentation. No inference or uploads.
+
+## Publication evidence
+
+Verified public GitHub backup, MIT license, green CI and successful Pages deployment.
+Recorded deployed revision, public HTTP/browser checks and PR review state in
+PUBLICATION.md. Export/page changes remain on PR #1; no merge claimed.
+
+## M1 authorized audio and video samples
+
+Added `sample-script`, public reference_reading.txt and recording guidance.
+Added `prepare-sample` and MediaImporter for authorized local audio/video excerpts,
+transcript files, track selection and 24 kHz mono PCM preparation. Existing host
+FFmpeg runs under verified cgroup/file-size/network limits with measured duration,
+peak memory and timeout/descendant cleanup. Added separate authorized-reference
+export labelling, private artifact ignores, contract tests and opt-in real media
+smoke. No speech generation, automatic transcript, recorder or model download.
+
+## Media preparation publication
+
+Backed up the audio/video preparation changes in PR #1, verified green 191-test
+GitHub CI and republished the recording instructions to Pages. Checked the public
+content and mobile rendering. No merge, model download or synthesis claimed.
+
+## M1 approved Qwen runtime preparation
+
+Added separately pinned CPU engine dependencies, artifact inventory and exact
+model manifest. Added bounded sequential size/hash-verified private download
+with cache validation, path/redirect protections and no retries. Opt-in setup
+checker requires actual cgroup limits and offline loading. Approved isolated
+runtime import and model download succeeded; real voice synthesis remains pending.
+
+## M1 private reusable speaker takes
+
+Added explicit per-speaker/per-take private snapshot storage with consent,
+transcript, technical metadata and checksums. CLI and Python API add/list/select/
+delete takes with no overwrite or global active speaker. Default data stays
+outside Git; additional profile-folder ignore rules protect local metadata too.
+Added same-script six-take recording instructions and capture-format guidance.
+No model training, automatic reference blending or quality scoring is introduced.
+
+
+## M1 experimental protected synthesis pipeline
+
+Added speak CLI for direct WAV or explicit profile/take references, bounded UTF-8
+script/transcript files, fresh authorization and preflight output checks. Added
+local Qwen provider and worker with approved manifest hashing, read-only model
+verification, isolated CPU runtime/version checks, private descriptor handoff,
+offline BF16/eager execution and finite/range/duration/PCM output validation.
+Extracted the existing systemd transport so media and inference share one lock
+and protection/cleanup implementation. Added generated_unreviewed results and
+synthetic disclosure export; measured failures are private and never retried.
+Real process/media and controlled-model audio-library bridge checks passed.
+No real reference-conditioned synthesis or human listening result is claimed.

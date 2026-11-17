@@ -30,3 +30,14 @@ Downloading weights needs explicit approval even though storage is available.
 If the model does not fit, report measured failure and stop. Never raise budgets.
 FFmpeg installation is separately gated as a system dependency. No remote uploads
 or paid service access without explicit destination/payload/cost approval.
+
+
+Experimental speak uses the shared ProtectedRunner, with the existing legacy
+media lock also serializing inference. Media remains capped at 30 seconds;
+inference is at most 120 seconds including artifact verification, startup and
+generation, plus the documented stop margins. Both paths read back actual
+cgroup/file-size/network restrictions and clean the owned control group. The
+Qwen worker rechecks these before importing ML libraries, requires MemAvailable
+to cover the hard budget, and verifies pinned artifacts read-only. It never
+downloads models or starts an unprotected fallback. See SYNTHESIS.md for commands,
+fixed errors, configuration reporting and limits of failure/OOM measurements.
