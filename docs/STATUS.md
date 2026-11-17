@@ -4,8 +4,8 @@ Verified 2026-11-17 UTC (live system clock).
 
 Current milestone: M1. State: BLOCKED for real synthesis. M0 remains COMPLETE.
 Current bounded task: safe PCM WAV export API/CLI and owner-requested GitHub
-backup/project page. Implementation and local verification complete; GitHub
-publication results will be recorded in docs/PUBLICATION.md.
+backup/project page. Implementation, verification, GitHub backup and live Pages publication complete.
+Evidence is recorded in docs/PUBLICATION.md; PR #1 remains OPEN for review.
 Last verified capability: script/voice gating, simulation coordination, strict
 bounded PCM output validation and labelled atomic no-clobber export. Supported
 CLI commands: config, validate-voice, export-simulation. No speak/HTTP endpoint.
@@ -13,9 +13,12 @@ Latest full lightweight regression: 147 passed, 0 failed, 0 skipped;
 flake8 src tests, JavaScript syntax, wheel build and wheel-installed export passed.
 All 114 prior tests remain passing. Desktop/mobile browser QA and visual inspection
 passed. No formal accessibility certification claimed.
-Last completed commit before export/page changes: ac5841e (MIT and automation).
+Last verified implementation commit: 7ae3b75 (project page), with export at
+69267b3. MIT/automation bootstrap is ac5841e.
 Use git log for current task revision. Foundation backed up on GitHub main;
-export/page work uses feature/wav-export-and-project-page and PR review.
+export/page work is backed up on feature/wav-export-and-project-page in PR #1.
+Pages deployment and PR CI passed; public URL/assets returned HTTP 200.
+No merge or real-inference completion is claimed.
 Known regressions: none observed. Unsupported filesystems fail safely on export.
 
 Next recommended task: implement and verify the OS-bounded subprocess runner

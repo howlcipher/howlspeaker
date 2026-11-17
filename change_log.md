@@ -34,3 +34,9 @@ Strips non-audio metadata, rejects symlink/traversal targets and preserves input
 Added export, failure cleanup and narration-to-export regression coverage.
 Added a static accessible Howl-style project page with ecosystem links, accurate
 milestone labels and working command/API documentation. No inference or uploads.
+
+## Publication evidence
+
+Verified public GitHub backup, MIT license, green CI and successful Pages deployment.
+Recorded deployed revision, public HTTP/browser checks and PR review state in
+PUBLICATION.md. Export/page changes remain on PR #1; no merge claimed.
