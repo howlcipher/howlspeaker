@@ -12,3 +12,11 @@ Added explicit authorization/provenance and optional transcript requirements,
 bounded immutable PCM WAV snapshots, private metadata CLI output and authority,
 format, truncation, size, duration and filesystem regression coverage.
 No engine integration or real synthesis has been performed.
+
+## M1 provider contract and coordination
+
+Added a minimal engine-independent provider protocol, private immutable requests,
+explicit simulation results and a simulation-only narration coordinator. Invalid
+scripts, authorization, references, unsupported settings and provider modes fail
+before invocation. Provider failures are private with zero retries. Added 43
+behavioral cases; the fake remains test-only. No real engine or timeout runner.

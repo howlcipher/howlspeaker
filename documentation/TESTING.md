@@ -33,3 +33,22 @@ Full lightweight regression and flake8 are required after final code changes.
 Missing integration/acceptance: engine receives the actual snapshot; real consent
 record persistence/deletion; inference cleanup/resource measurement; export and
 human listening. These remain explicitly outside this bounded task.
+
+## Test impact assessment: M1 provider coordination
+
+Observable change: simulation-only narration API validates script/reference and
+provider contract before one invocation, passes a private snapshot/deadline and
+returns bounded bytes with a fixed simulation label. Retained all 71 previous
+tests. Added 43 cases covering valid handoff, invalid/edge scripts, required and
+optional transcripts, authorization/provenance, malformed reference, unsupported
+settings/modes, changed provider declarations, output boundaries, malformed
+capabilities, private exceptions, interruption and zero retries. Existing tests
+still express intended behavior; no obsolete or duplicate contracts removed.
+Smallest tier: unit plus in-process fake-provider integration. The full lightweight
+suite and flake8 are the final regression gate. Packaging includes an import check
+for the installed service. No heavy tests exist or were skipped silently.
+
+Missing acceptance: output WAV format/duration and atomic export, real engine
+execution, timeout/cgroup enforcement, cancellation/descendant cleanup, resource
+measurements and human listening. The timeout in a request is not enforcement;
+provider mode declarations are not proof of execution or a sandbox.

@@ -1,7 +1,7 @@
 # HowlSpeaker
 
 Local-first narration from authorized voice samples and scripts.
-M0 foundation and bounded M1 voice validation are available.
+M0 foundation, M1 voice validation and simulation-only coordination are available.
 Speech generation is not implemented. No weights are bundled or downloaded.
 
 ## Install and verify
@@ -50,3 +50,20 @@ Extended/float WAV and RF64 need conversion outside this command. Silence is val
 PCM; intelligibility, speech content and resemblance are not assessed here.
 No source is copied to disk or uploaded. Callers must release profile references
 to discard in-memory data; secure erasure of Python memory is not guaranteed.
+
+## Provider coordination status
+
+The Python API includes `SynthesisProvider`, private `SynthesisRequest` and
+`NarrationService.simulate`. The coordinator validates script length/control
+characters, authorization, provenance, transcript requirements and reference WAV
+before making one provider call. Generation settings are currently unsupported.
+Only trusted injected providers marked `simulation` are accepted. The fake exists
+only in tests; there is no fake or real synthesis command in the CLI.
+
+`SimulationResult` always labels its opaque bytes as simulation evidence. These
+bytes are size-checked, not validated as playable WAV or intelligible speech.
+Provider errors are private and never retried. Timeout budgets are passed through,
+not enforced by this in-process test seam. Output size validation occurs after the
+provider returns and is not a memory sandbox. No real adapter may use this seam
+as a substitute for the verified process/cgroup runner required for inference.
+Provider metadata is a trusted-code declaration, not proof of what code executes.

@@ -21,14 +21,25 @@ snapshot, authorization attestation, provenance and optional transcript.
 nonblocking, no-follow regular-file descriptor. Container and PCM metadata checks
 precede decoding with standard-library wave. No persistent profile store exists.
 
-Remaining M1 design, not implemented: a synthesis workflow validates local reference, attestation,
-provenance and optional transcript. A minimal SynthesisProvider accepts text,
-reference and supported settings and returns audio plus measurements.
-NarrationService coordinates without engine imports. The provider runs in a
-bounded child service; do not confuse Python timeouts with memory enforcement.
-AudioProcessor validates/converts with established libraries/FFmpeg as needed;
-ExportService publishes validated WAV atomically beneath a selected output root.
-Reject traversal, symlink escapes, overwrite of references and unsafe subprocess
-shell interpolation. Keep private files owner-readable and deletable.
-Implement these only when required, with a deterministic test-only fake.
+M1 provider seam implemented: a structural SynthesisProvider protocol declares
+execution kind, transcript requirement and one synthesize(request) method.
+SynthesisRequest carries normalized bounded text, the validated immutable voice
+snapshot and a timeout budget. NarrationService.simulate rejects real/remote modes,
+unsupported settings and invalid inputs before one call. SimulationResult carries
+opaque bounded bytes and a fixed simulation evidence label. FakeProvider lives
+only in tests; no production implementation or synthesis CLI exists.
+
+Protocol plus composition keeps engines independent with minimal machinery;
+unlike a base-class hierarchy it provides no shared implementation. A provider
+registry/plugin loader would add discovery and lifecycle complexity without an
+installed engine, so neither is introduced. Providers are trusted internal code;
+metadata checks are not a security sandbox. Deadline and output byte checks do
+not establish process resource protection or playable audio. No inference runner
+or automatic retries are implemented.
+
+Remaining M1 design: approved real adapter behind an OS-bounded child runner,
+measured timeout/failure/descendant cleanup, audio output validation and atomic WAV
+export. AudioProcessor uses established libraries/FFmpeg where needed;
+ExportService must reject traversal, symlink escapes and reference overwrite.
+Keep private files owner-readable and deletable. Introduce these only as needed.
 No provider registry, plugin loader, HTTP service, scheduler or database yet.

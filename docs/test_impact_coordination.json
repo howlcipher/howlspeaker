@@ -1,0 +1,16 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Simulation-only provider protocol and narration coordination validate text and authorized voice before single invocation; return private bounded opaque simulation bytes",
+  "tests_added": [
+    "tests/test_narration.py: 43 behavioral and fake-provider integration cases"
+  ],
+  "tests_updated": [],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests"
+  ],
+  "rationale": "All 71 previous contracts remain applicable and passing. Added script/authority/reference/transcript gates, unsupported settings/modes, capability and output boundaries, private failures, interruption and zero retries. Full 114-test regression and installed API imports passed. No engine, deadline enforcement, process cleanup, WAV output validation, export or listening acceptance is claimed; those remain M1 gaps."
+}
