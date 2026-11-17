@@ -44,3 +44,21 @@ local helper now calls the existing /usr/bin/gh; no global Git configuration was
 changed and no credential values were written to source or logs.
 
 M1 remains BLOCKED for real synthesis. No weights downloaded or inference run.
+
+## 2026-11-17 audio/video preparation update
+
+Deployed source db1dd0b3d3d9827a7bbe99c98625492471d115d1 includes recording-script
+and local audio/video preparation instructions. Pages run 44006468922 succeeded:
+https://github.com/howlcipher/howlspeaker/actions/runs/44006468922
+
+CI for that source succeeded on Python 3.12 (191 tests plus lint/package checks):
+https://github.com/howlcipher/howlspeaker/actions/runs/44006476706
+
+Public HTTP 200 content includes sample-script/prepare-sample, and mobile Chromium
+render has no horizontal page overflow or JS errors. Desktop/mobile local checks
+also pass. Installed wheel CLI reading-script and real guarded WAV preparation
+passed. The opt-in synthetic MP3/MP4 and timeout smoke evidence is in media_smoke.json.
+No user footage, models or generated narration were uploaded to the repository or
+site. Local recordings and common media formats are now ignored by Git. PR #1
+remains open; no merge or real synthesis completion is claimed. Later docs-only
+head checks are visible in that PR.

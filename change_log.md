@@ -50,3 +50,9 @@ FFmpeg runs under verified cgroup/file-size/network limits with measured duratio
 peak memory and timeout/descendant cleanup. Added separate authorized-reference
 export labelling, private artifact ignores, contract tests and opt-in real media
 smoke. No speech generation, automatic transcript, recorder or model download.
+
+## Media preparation publication
+
+Backed up the audio/video preparation changes in PR #1, verified green 191-test
+GitHub CI and republished the recording instructions to Pages. Checked the public
+content and mobile rendering. No merge, model download or synthesis claimed.

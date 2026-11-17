@@ -11,10 +11,12 @@ Full lightweight regression: 191 passed, 0 failed, 0 skipped. Lint includes
 src/, tests/ and scripts/. Real media smoke passes MP3, MP4, no-audio rejection
 and timeout/descendant cleanup. Peaks/durations/exit statuses in BENCHMARKS.md
 and media_smoke.json. This is media decoding, not inference evidence.
-Last completed commit before this task: 55f01e6 (GitHub publication evidence).
+Verified implementation commit: a2f01aa (media preparation); deployed page
+source: db1dd0b. See git log for the documentation evidence revision.
 Current work remains on feature/wav-export-and-project-page in PR #1; no merge.
 See git log and PR checks for final head. Website publication evidence is in
-PUBLICATION.md; updated media guidance is prepared for the next deployment.
+PUBLICATION.md; updated media guidance is live and public HTTP/mobile checks pass.
+Pages run 44006468922 and PR CI run 44006476706 succeeded.
 Known regressions: none in the lightweight suite. Linux user systemd and compatible
 host tools are required; no unrestricted fallback. Other codec combinations are
 untested. No in-app microphone/camera recorder or HTTP upload endpoint exists.
