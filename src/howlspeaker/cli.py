@@ -1,4 +1,4 @@
-"""Foundation CLI. No model imports, network requests, or synthesis."""
+"""Explicit local tools. Engine imports remain in the protected worker only."""
 
 import argparse
 import json
@@ -9,7 +9,7 @@ from pathlib import Path
 from howlspeaker.audio import read_local_audio
 from howlspeaker.config import load_configuration
 from howlspeaker.export import ExportService
-from howlspeaker.provider import SimulationResult
+from howlspeaker.provider import SimulationResult, SynthesisFailure
 from howlspeaker.diagnostics import configure_logging
 from howlspeaker.voice import validate_voice, validate_attestation
 from howlspeaker.media import MediaImporter, REFERENCE_SCRIPT
@@ -80,6 +80,8 @@ def main(argv: list[str] | None = None) -> int:
             transcript = command.add_mutually_exclusive_group()
             transcript.add_argument("--transcript")
             transcript.add_argument("--transcript-file", type=Path)
+    from howlspeaker.speak_cli import add_speak_parser
+    add_speak_parser(commands)
     args = parser.parse_args(argv)
     if args.command == "sample-script":
         print(REFERENCE_SCRIPT)
@@ -88,6 +90,10 @@ def main(argv: list[str] | None = None) -> int:
     configure_logging(logger, sys.stderr)
     try:
         settings = load_configuration(args.config)
+        if args.command == "speak":
+            from howlspeaker.speak_cli import speak
+            print(json.dumps(speak(args, settings), indent=2))
+            return 0
         if args.command == "profile":
             store = ProfileStore(args.store, settings)
             if args.profile_action == "add":
@@ -144,6 +150,12 @@ def main(argv: list[str] | None = None) -> int:
             )
             print(json.dumps(profile.audio_metadata(), indent=2))
             return 0
+    except SynthesisFailure as error:
+        logger.error("", extra={"event": "synthesis_failed"})
+        print(json.dumps({"error": str(error),
+                          "measurements": error.measurements}),
+              file=sys.stderr)
+        return 2
     except ValueError as error:
         logger.error("", extra={"event": "input_rejected"})
         print(str(error), file=sys.stderr)

@@ -132,3 +132,39 @@ def test_redirect_authority_rejected(url):
     from howlspeaker.model_files import _Redirects
     with pytest.raises(ValueError):
         _Redirects().redirect_request(None, None, 302, "", {}, url)
+
+
+def test_read_only_model_verification_and_deadline(tmp_path):
+    import time
+    from howlspeaker.model_files import verify_model
+    path, data = manifest_file(tmp_path)
+    manifest = load_manifest(path)
+    root = tmp_path / 'absent'
+    with pytest.raises(ValueError):
+        verify_model(manifest, root, deadline=time.monotonic() + 1)
+    assert not root.exists()
+    download_model(manifest, root,
+                   fetch=lambda *args, **kwargs: io.BytesIO(data))
+    verify_model(manifest, root, deadline=time.monotonic() + 1)
+    with pytest.raises(ValueError, match='deadline'):
+        verify_model(manifest, root, deadline=time.monotonic() - 1)
+    (root/'speech_tokenizer/model.safetensors').write_bytes(b'x' * len(data))
+    with pytest.raises(ValueError):
+        verify_model(manifest, root, deadline=time.monotonic() + 1)
+
+
+def test_read_only_verification_refuses_symlinked_weights(tmp_path):
+    import time
+    from howlspeaker.model_files import verify_model
+    path, data = manifest_file(tmp_path)
+    manifest = load_manifest(path)
+    root = tmp_path/'models'
+    download_model(manifest, root,
+                   fetch=lambda *args, **kwargs: io.BytesIO(data))
+    weights = root/'speech_tokenizer/model.safetensors'
+    outside = tmp_path/'outside'
+    weights.rename(outside)
+    weights.symlink_to(outside)
+    with pytest.raises(ValueError):
+        verify_model(manifest, root, deadline=time.monotonic() + 1)
+    assert outside.read_bytes() == data

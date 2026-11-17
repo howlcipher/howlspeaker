@@ -12,3 +12,13 @@
 | Misleading fake success | M1 must include real reference-conditioned audio and human listening | CONTROLLED |
 | Public release license | Application license not yet selected; no release made | OPEN |
 | Audio tooling absent | FFmpeg not on PATH; approval required for system installation | OPEN |
+
+
+M1 experimental provider follow-up: speak wiring and protected transport tests
+do not demonstrate real Qwen generation. CPU BF16 compatibility during reference
+encoding/decoding, latency, actual inference peak and possible SoX requirements
+remain open. A killed guard may not report metrics; output must fail closed and
+metrics must be reported unavailable, never fabricated. No OOM stress was run.
+A finite/valid WAV can still contain wrong, missing, truncated or unnatural speech;
+token caps do not prove content completeness. Human listening is a required gate.
+Host headroom is checked before reads/load, but unrelated workloads can change.

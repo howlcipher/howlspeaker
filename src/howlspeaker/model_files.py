@@ -168,3 +168,36 @@ def download_model(manifest: dict, root: Path, *, fetch=_fetch) -> None:
     finally:
         if root_fd is not None:
             os.close(root_fd)
+
+
+def verify_model(manifest: dict, root: Path, *, deadline: float) -> None:
+    """Offline verification; missing files never trigger downloads."""
+    from howlspeaker.export import _open_directory
+    _validate(manifest)
+    root_fd = None
+    try:
+        root_fd = _open_directory(root)
+        for item in manifest['files']:
+            parent = os.dup(root_fd)
+            try:
+                parts = item['path'].split('/')
+                for part in parts[:-1]:
+                    child = os.open(part, os.O_RDONLY | os.O_DIRECTORY
+                                    | os.O_NOFOLLOW, dir_fd=parent)
+                    os.close(parent)
+                    parent = child
+                fd = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW
+                             | os.O_NONBLOCK, dir_fd=parent)
+                with os.fdopen(fd, 'rb') as source:
+                    info = os.fstat(source.fileno())
+                    if (not stat.S_ISREG(info.st_mode)
+                            or info.st_size != item['bytes']):
+                        raise ValueError('Invalid cached model artifact')
+                    _copy_verified(source, None, item, deadline)
+            finally:
+                os.close(parent)
+    except OSError:
+        raise ValueError('Verified local model files are required') from None
+    finally:
+        if root_fd is not None:
+            os.close(root_fd)

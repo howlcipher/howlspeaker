@@ -138,3 +138,37 @@ with unchanged interaction/layout code, checked with existing JS syntax gate.
 No new browser/device/model workload. No real profile supplied and no inference
 executed; take selection into the real provider and human quality comparison
 remain unverified. Hashes detect corruption, never authenticate consent or words.
+
+
+## Test impact assessment: M1 protected synthesis wiring
+
+Changed behavior: local Qwen adapter/worker, explicit speak CLI with direct WAV
+or profile/take selection and fresh authorization, generated-unreviewed export,
+shared protected process transport and read-only pinned model verification. Added
+52 behavioral cases in test_synthesis, test_speak_cli, test_qwen_worker and the
+existing process/model-files suites. Retained all 238 prior cases; updated/renamed
+the obsolete simulation-only constructor test to reject remote/unknown kinds
+while permitting the distinct local inference path. Simulation never accepts
+that path. No tests removed and no duplicate contracts consolidated.
+
+Coverage: actual snapshot/transcript handoff, no raw data in argv/CLI diagnostics,
+consent/transcript/script/config/path/model-manifest rejection, selected-profile
+isolation, preflight overwrite checks, private failure measurements, total time
+and output limits, cgroup/file-size/socket and low-host-memory checks before
+imports, cache corruption/symlink/deadline rejection, no retry and disclosure WAV.
+Smallest tier: unit, filesystem and controlled provider/CLI integration. Full
+lightweight regression warranted because shared resource/export/voice contracts
+changed. Gate: pytest tests -q; flake8 src tests scripts; node --check site/script.js;
+wheel build and installed CLI/API import checks. No ML dependencies in pytest.
+
+Optional real execution: smoke_media.py rechecks actual host FFmpeg conversions,
+no-audio rejection and harmless timeout/descendant cleanup after runner extraction.
+smoke_synthesis_transport.py uses the installed CPU audio libraries and a controlled
+replacement model to verify bridge/private diagnostics, NaN, overlength and
+range rejection, plus actual worker entry-point rejection. Serial only, under
+verified budgets. These are distinct opt-in cases, not silently skipped pytest.
+
+Missing acceptance: real Qwen reference encoding/generation/decoding, actual
+voice/text matching, actual inference memory/latency, OOM measurements and human
+listening. No claim that a mocked return or controlled fixture proves synthesis.
+Same-user code/models are trusted and no complete OS/codec sandbox is claimed.

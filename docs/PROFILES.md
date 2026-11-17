@@ -61,8 +61,8 @@ other_user = store.load("speaker_b", "natural_01")
 
 Each load returns a revalidated immutable VoiceProfile snapshot under current
 limits. These examples require the takes to exist and never create consent on
-your behalf. The real synthesis provider integration is still pending; there is
-no working speak command yet. `store.add(id, take, validated_profile, delivery=...)`
+your behalf. Experimental `speak --profile ID --take ID --authorized` now uses
+the selected snapshot; see SYNTHESIS.md. Real generation remains unverified. `store.add(id, take, validated_profile, delivery=...)`
 also accepts MediaImporter.prepare(...).profile without exporting an extra WAV.
 
 ## What multiple readings mean

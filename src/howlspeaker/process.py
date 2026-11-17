@@ -1,4 +1,4 @@
-"""Serial, fail-closed systemd execution for bounded local media decoding."""
+"""Serial systemd transport for bounded offline media and synthesis workers."""
 
 import fcntl
 import json
@@ -96,9 +96,9 @@ def _stop_service(unit: str) -> None:
         _control("kill", "--signal=KILL", "--kill-whom=all", unit)
         _control("stop", unit)
         if _control("is-active", "--quiet", unit).returncode == 0:
-            raise ValueError("Cannot confirm media worker cleanup")
+            raise ValueError("Cannot confirm local worker cleanup")
     elif active.returncode not in (3, 4):
-        raise ValueError("Cannot confirm media worker cleanup")
+        raise ValueError("Cannot confirm local worker cleanup")
     _control("reset-failed", unit)
 
 
@@ -120,6 +120,30 @@ class SystemdMediaRunner:
                 or type(max_output_bytes) is not int
                 or not 1 <= max_output_bytes <= self._config.max_voice_bytes):
             raise ValueError("Invalid media execution limits")
+        return ProtectedRunner(self._config).run(
+            source, [self._ffmpeg, *arguments],
+            max_output_bytes=max_output_bytes, timeout=timeout,
+        )
+
+
+class ProtectedRunner:
+    """Serial offline execution of a trusted local process tree."""
+
+    def __init__(self, config: Configuration | None = None):
+        self._config = config if config is not None else Configuration()
+
+    def run(self, source: BinaryIO, command: list[str], *,
+            max_output_bytes: int, timeout: int) -> MediaRunResult:
+        if (type(timeout) is not int
+                or not 1 <= timeout <= self._config.timeout_seconds
+                or type(max_output_bytes) is not int
+                or not 1 <= max_output_bytes <= max(
+                    self._config.max_voice_bytes,
+                    self._config.max_output_bytes)
+                or not isinstance(command, list) or not command
+                or any(not isinstance(value, str) or not value or "\0" in value
+                       for value in command)):
+            raise ValueError("Invalid protected execution settings")
         runtime_dir = os.environ.get("XDG_RUNTIME_DIR", tempfile.gettempdir())
         runtime = Path(runtime_dir)
         lock_path = runtime / f"howlspeaker-media-{os.getuid()}.lock"
@@ -136,15 +160,15 @@ class SystemdMediaRunner:
                 try:
                     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 except BlockingIOError:
-                    raise ValueError("Media worker is already busy") from None
+                    raise ValueError("Local worker is already busy") from None
                 return self._execute(
-                    source, arguments, max_output_bytes, timeout,
+                    source, command, max_output_bytes, timeout,
                 )
         except (OSError, subprocess.SubprocessError):
-            raise ValueError("Media service unavailable; check user systemd") \
+            raise ValueError("Local service unavailable; check user systemd") \
                 from None
 
-    def _execute(self, source: BinaryIO, arguments: list[str],
+    def _execute(self, source: BinaryIO, child_command: list[str],
                  output_limit: int, timeout: int) -> MediaRunResult:
         config = self._config
         budget = config.to_dict() | {
@@ -172,11 +196,14 @@ class SystemdMediaRunner:
         for name, value in properties.items():
             command.extend(["--property", f"{name}={value}"])
         thread_keys = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
-                       "MKL_NUM_THREADS")
+                       "MKL_NUM_THREADS", "NUMBA_NUM_THREADS")
         for key in thread_keys:
             command.append("--setenv=" + key + "=1")
-        command.extend(["python3", "-c", GUARD, json.dumps(budget),
-                        self._ffmpeg, *arguments])
+        for key in ("HF_HUB_OFFLINE", "TRANSFORMERS_OFFLINE",
+                    "HF_HUB_DISABLE_TELEMETRY"):
+            command.append("--setenv=" + key + "=1")
+        command.extend(["python3", "-I", "-c", GUARD, json.dumps(budget),
+                        *child_command])
         with (tempfile.TemporaryFile() as output,
               tempfile.TemporaryFile() as err):
             process = subprocess.Popen(
@@ -187,7 +214,7 @@ class SystemdMediaRunner:
                 try:
                     process.wait(timeout=timeout + 7)
                 except subprocess.TimeoutExpired:
-                    raise ValueError("Media extraction timed out") from None
+                    raise ValueError("Local worker timed out") from None
             finally:
                 try:
                     _stop_service(unit)
@@ -196,7 +223,7 @@ class SystemdMediaRunner:
                         os.killpg(process.pid, signal.SIGKILL)
                     process.wait(timeout=5)
             if output.tell() > output_limit or err.tell() > 16384:
-                raise ValueError("Media worker exceeded output limit")
+                raise ValueError("Local worker exceeded output limit")
             output.seek(0)
             err.seek(0)
             payload = output.read(output_limit + 1)
@@ -204,23 +231,28 @@ class SystemdMediaRunner:
                        for line in err.read(16385).splitlines()
                        if line.startswith(b"HOWLSPEAKER_REPORT ")]
             if len(reports) != 1:
-                raise ValueError("Media protection or FFmpeg is unavailable")
+                raise ValueError("Protection failed or report unavailable")
             try:
                 report = json.loads(reports[0])
                 result = MediaRunResult(payload, **report)
-                if (type(result.peak_memory_bytes) is not int
-                        or not 0 < result.peak_memory_bytes
-                        <= config.memory_max_bytes
-                        or type(result.swap_peak_bytes) is not int
-                        or result.swap_peak_bytes != 0
-                        or type(result.exit_code) is not int
-                        or not -255 <= result.exit_code <= 255
-                        or type(result.duration_seconds) not in (int, float)
-                        or not math.isfinite(result.duration_seconds)
-                        or not 0 <= result.duration_seconds <= timeout + 2):
-                    raise ValueError("Invalid media measurements")
+                validate_measurements(result, config, timeout)
             except (ValueError, TypeError):
-                raise ValueError("Invalid media worker report") from None
+                raise ValueError("Invalid local worker report") from None
             if process.returncode != 0 and result.exit_code == 0:
-                raise ValueError("Media worker failed after extraction")
+                raise ValueError("Local worker failed after producing output")
             return result
+
+
+def validate_measurements(result, config, timeout):
+    """Reject missing, invalid or out-of-budget resource reports."""
+    if (type(result.peak_memory_bytes) is not int
+            or not 0 < result.peak_memory_bytes
+            <= config.memory_max_bytes
+            or type(result.swap_peak_bytes) is not int
+            or result.swap_peak_bytes != 0
+            or type(result.exit_code) is not int
+            or not -255 <= result.exit_code <= 255
+            or type(result.duration_seconds) not in (int, float)
+            or not math.isfinite(result.duration_seconds)
+            or not 0 <= result.duration_seconds <= timeout + 2):
+        raise ValueError("Invalid worker measurements")

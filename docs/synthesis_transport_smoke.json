@@ -1,0 +1,53 @@
+{
+  "real_inference": false,
+  "real_reference": false,
+  "cases": [
+    {
+      "case": "controlled_model_real_libraries_bridge",
+      "status": "PASS",
+      "audio": {
+        "sample_rate": 24000,
+        "frames": 2400,
+        "channels": 1,
+        "sample_width": 2,
+        "duration_seconds": 0.1
+      },
+      "exit_code": 0,
+      "duration_seconds": 1.8086182709957939,
+      "peak_memory_bytes": 155172864,
+      "swap_peak_bytes": 0
+    },
+    {
+      "case": "installed_worker_rejects_invalid_request",
+      "status": "PASS",
+      "exit_code": 65,
+      "duration_seconds": 0.09793841297505423,
+      "peak_memory_bytes": 18694144,
+      "swap_peak_bytes": 0
+    },
+    {
+      "case": "nan",
+      "status": "PASS",
+      "exit_code": 70,
+      "duration_seconds": 1.7285874839872122,
+      "peak_memory_bytes": 153968640,
+      "swap_peak_bytes": 0
+    },
+    {
+      "case": "overlength",
+      "status": "PASS",
+      "exit_code": 70,
+      "duration_seconds": 1.766424659988843,
+      "peak_memory_bytes": 154218496,
+      "swap_peak_bytes": 0
+    },
+    {
+      "case": "out_of_range",
+      "status": "PASS",
+      "exit_code": 70,
+      "duration_seconds": 1.7957099829800427,
+      "peak_memory_bytes": 153980928,
+      "swap_peak_bytes": 0
+    }
+  ]
+}

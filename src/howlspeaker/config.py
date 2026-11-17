@@ -1,4 +1,4 @@
-"""Strict M0 configuration; resource values are budgets, not enforcement."""
+"""Strict configuration; resource values are budgets, not enforcement."""
 
 import json
 from dataclasses import asdict, dataclass
@@ -45,7 +45,7 @@ class Configuration:
         if self.memory_high_bytes > self.memory_max_bytes:
             raise ValueError("Memory high exceeds memory maximum")
         if self.provider != "disabled" or self.remote_enabled is not False:
-            raise ValueError("Inference is unavailable in M0")
+            raise ValueError("Automatic/remote providers are disabled")
 
     def to_dict(self) -> dict:
         return asdict(self)

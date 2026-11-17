@@ -1,4 +1,4 @@
-"""Private, no-clobber atomic publication of labelled simulation WAV files."""
+"""Private atomic publication of labelled reference and output WAV files."""
 
 import io
 import os
@@ -10,7 +10,7 @@ from pathlib import Path
 
 from howlspeaker.audio import validate_pcm_wav
 from howlspeaker.config import Configuration
-from howlspeaker.provider import SimulationResult
+from howlspeaker.provider import GeneratedResult, SimulationResult
 from howlspeaker.voice import VoiceProfile, validate_attestation
 
 
@@ -62,6 +62,24 @@ class ExportService:
     def __init__(self, config: Configuration | None = None) -> None:
         self._config = config if config is not None else Configuration()
 
+    @staticmethod
+    def check_destination(output_dir: Path, name: str) -> None:
+        validate_output_name(name)
+        descriptor = None
+        try:
+            descriptor = _open_directory(output_dir)
+            try:
+                os.stat(name, dir_fd=descriptor, follow_symlinks=False)
+            except FileNotFoundError:
+                return
+            raise ValueError("Output already exists; overwrite is forbidden")
+        except OSError:
+            raise ValueError("Output directory is unavailable or unsafe") \
+                from None
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+
     def export_simulation(
         self, result: SimulationResult, output_dir: Path, name: str,
     ) -> dict:
@@ -70,6 +88,18 @@ class ExportService:
             raise ValueError("Only labelled simulation results are allowed")
         return self._export(result.audio_bytes, output_dir, name,
                             SIMULATION_LABEL, "simulation")
+
+    def export_generated(
+        self, result: GeneratedResult, output_dir: Path, name: str,
+    ) -> dict:
+        if (not isinstance(result, GeneratedResult)
+                or result.evidence_kind != "generated_unreviewed"):
+            raise ValueError("An unreviewed generated result is required")
+        return self._export(
+            result.audio_bytes, output_dir, name,
+            b"HowlSpeaker: synthetic speech; human review required\0",
+            "generated_unreviewed",
+        )
 
     def export_reference(
         self, profile: VoiceProfile, output_dir: Path, name: str,
@@ -88,10 +118,7 @@ class ExportService:
         self, data: bytes, output_dir: Path, name: str,
         label: bytes, evidence_kind: str, *, reference: bool = False,
     ) -> dict:
-        if (not isinstance(name, str)
-                or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,119}\.wav",
-                                name) is None):
-            raise ValueError("Output name must be a simple WAV filename")
+        validate_output_name(name)
         limits = dict(
             max_bytes=(self._config.max_voice_bytes if reference
                        else self._config.max_output_bytes),
@@ -130,3 +157,10 @@ class ExportService:
                 finally:
                     os.close(descriptor)
         return metadata | {"evidence_kind": evidence_kind, "filename": name}
+
+
+def validate_output_name(name):
+    if (not isinstance(name, str)
+            or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,119}\.wav",
+                            name) is None):
+        raise ValueError("Output name must be a simple WAV filename")

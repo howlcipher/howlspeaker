@@ -87,7 +87,7 @@
             <h3>CLI and Python API</h3>
             <p>Install locally with Python 3.12 or newer. No model weights are bundled. The core package has no runtime dependencies.</p>
             <p><code>sample-script</code> supplies read-aloud text. <code>prepare-sample</code> extracts an authorized audio or video clip into a mono WAV. <code>validate-voice</code> and <code>export-simulation</code> provide validation and labelled fixture export.</p>
-            <p>Use <code>MediaImporter</code>, <code>ProfileStore</code> and <code>ExportService</code> from Python. The <code>profile</code> CLI stores private speaker/take snapshots with explicit selection and deletion. No in-app recorder or automatic transcript is implemented.</p>
+            <p>Use <code>MediaImporter</code>, <code>ProfileStore</code> and <code>ExportService</code> from Python. The <code>profile</code> CLI stores private speaker/take snapshots with explicit selection and deletion. Experimental <code>speak</code> selects an authorized WAV or stored profile/take through a protected offline worker. Real synthesis remains unverified. No in-app recorder or automatic transcript is implemented.</p>
             <a class="text-link" href="https://github.com/howlcipher/howlspeaker/blob/feature/wav-export-and-project-page/docs/CLI.md">Read the command and API guide ↗</a>
           </div>
           <div class="terminal">
@@ -127,7 +127,7 @@ howlspeaker export-simulation --input fixture.wav \
         <div class="section-heading"><span class="index">03</span><div><p class="eyebrow">EVIDENCE BEFORE FEATURES</p><h2 id="roadmap-title">A gated path to narration.</h2></div></div>
         <ol class="roadmap">
           <li><span class="milestone">M0</span><div><h3>Feasibility &amp; foundation</h3><p>Package, baseline tests, engine comparison and verified resource-limit probes.</p></div><span class="state">COMPLETE</span></li>
-          <li class="current"><span class="milestone">M1</span><div><h3>Minimum viable voice generation</h3><p>Audio/video sample preparation, simulation coordination and export work. Real speech remains blocked pending approved model setup and bounded inference.</p></div><span class="state">IN DEVELOPMENT</span></li>
+          <li class="current"><span class="milestone">M1</span><div><h3>Minimum viable voice generation</h3><p>Private profiles, sample preparation and WAV export are available. Experimental guarded Qwen speak CLI/API is implemented; real speech and listening verification remain pending.</p></div><span class="state">IN DEVELOPMENT</span></li>
           <li><span class="milestone">M2–M4</span><div><h3>Production &amp; repair</h3><p>Ordered narration, selective regeneration and objective quality reports.</p></div><span class="state">PLANNED</span></li>
           <li><span class="milestone">M5–M6</span><div><h3>Local interface &amp; release</h3><p>A browser workflow, optional Howl integrations and reproducible installation.</p></div><span class="state">PLANNED</span></li>
         </ol>

@@ -2,8 +2,9 @@
 
 Local-first narration from authorized voice samples and scripts.
 M0 foundation, M1 audio/video sample preparation, voice validation,
-simulation coordination and WAV export are available.
-Speech generation is not implemented. No weights are bundled or downloaded.
+simulation coordination, WAV export and private speaker/take profiles are available.
+Experimental guarded Qwen synthesis CLI/API is implemented; real voice synthesis
+is NOT yet demonstrated. Weights are never bundled or automatically downloaded.
 
 ## Install and verify
 
@@ -25,7 +26,8 @@ These budgets do not apply operating-system limits by themselves.
 
 Read docs/STATUS.md, docs/PRODUCT.md and docs/ROADMAP.md before work.
 See docs/RESOURCE_SAFETY.md before any expensive operation.
-No remote uploads, network listeners, voice storage, or synthesis commands exist.
+No remote uploads or network listeners. Voice storage is explicit and private;
+only the experimental speak command starts a protected local inference worker.
 Application code is MIT licensed; model weights retain their own licenses.
 
 ## Validate an authorized reference
@@ -58,8 +60,9 @@ The Python API includes `SynthesisProvider`, private `SynthesisRequest` and
 `NarrationService.simulate`. The coordinator validates script length/control
 characters, authorization, provenance, transcript requirements and reference WAV
 before making one provider call. Generation settings are currently unsupported.
-Only trusted injected providers marked `simulation` are accepted. The fake exists
-only in tests; there is no fake or real synthesis command in the CLI.
+`simulate` accepts only trusted injected simulation providers; fakes are test-only.
+The separate `generate` method accepts a local adapter and enforces input/result
+validation, with OS limits implemented by the protected worker transport.
 
 `SimulationResult` always labels its opaque bytes as simulation evidence. The coordinator size-checks these bytes. ExportService separately validates PCM
 WAV format/duration; neither verifies intelligibility or speech quality.
@@ -141,7 +144,10 @@ upload endpoint is implemented; capture with your existing recording application
 The approved isolated Qwen runtime and pinned model files are being checked under
 3 GiB soft / 5 GiB hard memory limits with no swap. Core CLI/API stays independent
 of the engine. See [setup pins, safeguards and evidence](docs/QWEN_SETUP.md).
-Real synthesis is not yet demonstrated; no `speak` command is advertised.
+Real synthesis is not yet demonstrated. The experimental `speak` command and
+`NarrationService.generate` use a protected offline worker. Follow
+[the synthesis guide](docs/SYNTHESIS.md) for explicit engine paths, authorized
+file/profile selection, limits, measured transport checks and remaining risks.
 
 ## Private reusable voice profiles
 

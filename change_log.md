@@ -73,3 +73,17 @@ delete takes with no overwrite or global active speaker. Default data stays
 outside Git; additional profile-folder ignore rules protect local metadata too.
 Added same-script six-take recording instructions and capture-format guidance.
 No model training, automatic reference blending or quality scoring is introduced.
+
+
+## M1 experimental protected synthesis pipeline
+
+Added speak CLI for direct WAV or explicit profile/take references, bounded UTF-8
+script/transcript files, fresh authorization and preflight output checks. Added
+local Qwen provider and worker with approved manifest hashing, read-only model
+verification, isolated CPU runtime/version checks, private descriptor handoff,
+offline BF16/eager execution and finite/range/duration/PCM output validation.
+Extracted the existing systemd transport so media and inference share one lock
+and protection/cleanup implementation. Added generated_unreviewed results and
+synthetic disclosure export; measured failures are private and never retried.
+Real process/media and controlled-model audio-library bridge checks passed.
+No real reference-conditioned synthesis or human listening result is claimed.

@@ -136,3 +136,52 @@ def test_launcher_timeout_kills_owned_group(execution, monkeypatch):
         convert()
     assert len(execution["stopped"]) == 1
     assert killed == [12345]
+
+
+def test_inference_transport_uses_total_deadline_and_offline_environment(
+        execution):
+    from howlspeaker.process import ProtectedRunner
+    result = ProtectedRunner().run(
+        io.BytesIO(b'private request'),
+        ['/approved/python', '-I', '-m', 'howlspeaker.qwen_worker'],
+        max_output_bytes=100, timeout=120,
+    )
+    command = execution['command']
+    assert 'RuntimeMaxSec=122' in command
+    assert '--setenv=HF_HUB_OFFLINE=1' in command
+    assert '--setenv=TRANSFORMERS_OFFLINE=1' in command
+    assert '--setenv=NUMBA_NUM_THREADS=1' in command
+    assert 'private request' not in ' '.join(command)
+    assert result.exit_code == 0
+    assert len(execution['stopped']) == 1
+
+
+def test_media_and_inference_share_one_lock(execution, tmp_path):
+    import fcntl
+    from howlspeaker.process import ProtectedRunner
+    lock_path = tmp_path / f'howlspeaker-media-{os.getuid()}.lock'
+    with lock_path.open('w') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with pytest.raises(ValueError, match='busy'):
+            ProtectedRunner().run(io.BytesIO(), ['python3'],
+                                  max_output_bytes=100, timeout=120)
+    assert 'command' not in execution
+
+
+@pytest.mark.parametrize('timeout', [0, 121, True])
+def test_inference_timeout_limits_are_not_bypassable(execution, timeout):
+    from howlspeaker.process import ProtectedRunner
+    with pytest.raises(ValueError):
+        ProtectedRunner().run(io.BytesIO(), ['python3'],
+                              max_output_bytes=100, timeout=timeout)
+    assert 'command' not in execution
+
+
+def test_failed_child_retains_measurements(execution):
+    from howlspeaker.process import ProtectedRunner
+    execution['report']['exit_code'] = 124
+    execution['launcher'].returncode = 1
+    result = ProtectedRunner().run(io.BytesIO(), ['python3'],
+                                   max_output_bytes=100, timeout=120)
+    assert result.measurements()['exit_code'] == 124
+    assert len(execution['stopped']) == 1

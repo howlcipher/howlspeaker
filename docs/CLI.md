@@ -22,7 +22,8 @@ howlspeaker --help
 All commands support `--config FILE`; voice validation additionally supports
 `--transcript TEXT` and `--require-transcript`. Exit 0 means that command succeeded;
 exit 2 means validation/usage failure. JSON goes to stdout on success; safe errors
-go to stderr. No `speak` or HTTP endpoint exists yet. Nothing launches a model.
+go to stderr. Experimental `speak` is the explicit local synthesis entry point;
+no HTTP endpoint exists. Help, profiles and the default tests never launch a model.
 `sample-script` prints public read-aloud text. `prepare-sample` extracts an
 authorized local audio/video clip using the guarded host media service; see
 [recording guide](RECORDING.md) for options and Python API examples.
@@ -95,3 +96,12 @@ Use `howlspeaker profile add/list/show/delete`; `--store` and `--config` go befo
 the action. Explicit profile ID and take ID select one reference, with no global
 active speaker. See PROFILES.md for complete CLI/Python examples, default private
 location, consent/transcript persistence, deletion and Git exclusions.
+
+
+## Experimental speak
+
+`howlspeaker speak` selects --voice FILE or --profile ID --take ID, requires
+--authorized, --text/--text-file, --out, explicit --engine-python/--model-dir host
+paths and the approved --manifest. See SYNTHESIS.md for runnable command/API
+recipes and protected runtime installation. Real synthesis and human listening
+remain unverified; a controlled fixture is not voice-generation evidence.

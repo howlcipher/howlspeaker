@@ -1,0 +1,26 @@
+{
+  "schema": "howlplane.test_impact_assessment/v1",
+  "changed_behavior": "Experimental local Qwen provider/worker and speak CLI/API, generated-unreviewed disclosure export, shared bounded offline process transport and read-only artifact verification",
+  "tests_added": [
+    "tests/test_synthesis.py: 21 provider/coordinator/export cases",
+    "tests/test_speak_cli.py: 9 CLI/direct/profile/failure cases",
+    "tests/test_qwen_worker.py: 14 protection/input/headroom cases",
+    "tests/test_process.py: 6 shared transport cases",
+    "tests/test_model_files.py: 2 read-only cache cases"
+  ],
+  "tests_updated": [
+    "tests/test_narration.py: renamed/updated four parameterized unsupported-provider cases to allow the separate local path while preserving remote/unknown rejection"
+  ],
+  "tests_removed": [],
+  "duplicate_or_obsolete_tests_reviewed": true,
+  "full_regression_required": true,
+  "regression_commands_run": [
+    "python3 -m pytest tests -q",
+    "python3 -m flake8 src tests scripts",
+    "node --check site/script.js",
+    "Wheel build; installed speak CLI/API and no-ML-import checks",
+    ".venv/bin/python scripts/smoke_media.py",
+    "scripts/smoke_synthesis_transport.py with explicitly configured host CPU interpreter"
+  ],
+  "rationale": "290 total cases: 52 additions and all 238 previous cases retained, with the obsolete simulation-only constructor message/contract updated for separate local support. Full gate covers shared process/export/model validation and authority. Real shared media and controlled-model real-library bridge tests passed under caps, including timeout descendant cleanup and invalid numeric output rejection; these do not prove real model synthesis. Missing acceptance is actual authorized Qwen generation, inference resource/OOM evidence and human speech/voice assessment. No tests removed or duplicate protection consolidated."
+}

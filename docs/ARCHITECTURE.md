@@ -19,7 +19,8 @@ M1 voice validation implemented: VoiceProfile holds a validated immutable audio
 snapshot, authorization attestation, provenance and optional transcript.
 `validate_voice` checks authority before reading and bounds reads through a
 nonblocking, no-follow regular-file descriptor. Container and PCM metadata checks
-precede decoding with standard-library wave. No persistent profile store exists.
+precede decoding with standard-library wave. Optional ProfileStore storage is
+described below.
 
 M1 provider seam implemented: a structural SynthesisProvider protocol declares
 execution kind, transcript requirement and one synthesize(request) method.
@@ -87,3 +88,19 @@ active-speaker state. Separate takes are not mixed, trained or embedded together
 No encryption, identity proof or protection against malicious same-user edits is
 claimed. Delete removes one stored snapshot; backups and original recordings are
 separate. JSON is application data, never pickle or executable engine objects.
+
+
+M1 experimental synthesis: NarrationService.generate validates a VoiceProfile and
+script before one local provider call, independently validates WAV/resources and
+returns GeneratedResult marked generated_unreviewed. Simulation remains separate.
+QwenProvider serializes an immutable snapshot/script/transcript into an anonymous
+private descriptor; no reference paths or raw text enter argv. ProtectedRunner
+extracts the existing media execution path for reuse, keeping the 30-second media
+cap and the common legacy lock. It enforces the configured total inference cap
+(up to 120 seconds), cgroups, offline socket policy, file size and tree cleanup.
+Reusing the guard avoids divergent protection logic; a second specialized runner
+would isolate changes but duplicate safety code, while an in-process engine could
+not safely enforce memory/time budgets. The engine package imports ML libraries
+only after guard checks and pinned read-only model verification. It is installed
+in the explicitly configured isolated runtime; no source-path mapping is assumed.
+No dynamic plugin registry, daemon, queue or HTTP service is introduced.

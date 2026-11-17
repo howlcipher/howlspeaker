@@ -55,3 +55,23 @@ No real synthesis or voice benchmark. Verified limits stayed 3 GiB high,
 All transient services finished and no model remains running. Load is subject to
 lazy mapped pages and does not predict generation peak/time. See QWEN_SETUP.md
 for exact pins, approval, execution envelope, missing SoX and CPU warnings.
+
+
+## Protected synthesis implementation checks, 2026-11-17
+
+No real Qwen inference or real reference. The controlled model replacement used
+real installed Torch/NumPy/SoundFile, verified the reference tuple/transcript and
+CPU/local-only loader arguments, and emitted native/Python diagnostics that were
+successfully excluded from binary output. Valid output was a 0.1-second synthetic
+fixture. NaN, overlength and out-of-range arrays were rejected without output.
+Invalid installed-worker input returned exit 65 without imports or output.
+
+Controlled bridge: 1.8086s, 155172864-byte peak, swap 0, exit 0. Rejected waveform
+cases: 1.73–1.80s, peaks below 155 MB, swap 0, expected exit 70. No model was loaded.
+See synthesis_transport_smoke.json for final measurements. This is transport and
+bridge coverage, never voice-generation acceptance.
+
+Shared media transport rechecked actual MP3/MP4 imports (~0.21s, under 24 MB peak),
+no-audio rejection and descendant cleanup on a 1-second timeout (expected exit 124,
+1.1271s, 17272832-byte peak). See synthesis_media_regression.json. No OOM stress
+test, CPU speech-quality experiment or listening assessment was performed.

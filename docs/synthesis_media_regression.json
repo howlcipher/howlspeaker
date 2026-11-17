@@ -1,0 +1,55 @@
+{
+  "real_inference": false,
+  "cases": [
+    {
+      "case": "mp3",
+      "status": "PASS",
+      "measurements": {
+        "exit_code": 0,
+        "duration_seconds": 0.21183114999439567,
+        "peak_memory_bytes": 22929408,
+        "swap_peak_bytes": 0
+      },
+      "audio": {
+        "sample_rate": 24000,
+        "frames": 24000,
+        "channels": 1,
+        "sample_width": 2,
+        "duration_seconds": 1.0,
+        "evidence_kind": "authorized_reference",
+        "filename": "mp3.wav"
+      }
+    },
+    {
+      "case": "mp4",
+      "status": "PASS",
+      "measurements": {
+        "exit_code": 0,
+        "duration_seconds": 0.20727257200633176,
+        "peak_memory_bytes": 23666688,
+        "swap_peak_bytes": 0
+      },
+      "audio": {
+        "sample_rate": 24000,
+        "frames": 24000,
+        "channels": 1,
+        "sample_width": 2,
+        "duration_seconds": 1.0,
+        "evidence_kind": "authorized_reference",
+        "filename": "mp4.wav"
+      }
+    },
+    {
+      "case": "video_without_audio",
+      "status": "PASS"
+    },
+    {
+      "case": "timeout_descendant_cleanup",
+      "status": "PASS",
+      "exit_code": 124,
+      "duration_seconds": 1.127116952004144,
+      "peak_memory_bytes": 17272832,
+      "swap_peak_bytes": 0
+    }
+  ]
+}
