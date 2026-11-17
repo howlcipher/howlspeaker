@@ -25,7 +25,7 @@ These budgets do not apply operating-system limits by themselves.
 Read docs/STATUS.md, docs/PRODUCT.md and docs/ROADMAP.md before work.
 See docs/RESOURCE_SAFETY.md before any expensive operation.
 No remote uploads, network listeners, voice storage, or synthesis commands exist.
-Application license selection remains an owner decision before public release.
+Application code is MIT licensed; model weights retain their own licenses.
 
 ## Validate an authorized reference
 
@@ -67,3 +67,10 @@ not enforced by this in-process test seam. Output size validation occurs after t
 provider returns and is not a memory sandbox. No real adapter may use this seam
 as a substitute for the verified process/cgroup runner required for inference.
 Provider metadata is a trusted-code declaration, not proof of what code executes.
+
+## GitHub automation
+
+Lightweight CI runs unit/integration tests, lint and packaging on pull requests
+and main. The Pages workflow publishes only the static `site/` directory, never
+voice files, models or local configuration. It can also be manually dispatched
+for a reviewed branch. No model downloads or inference run in CI.
